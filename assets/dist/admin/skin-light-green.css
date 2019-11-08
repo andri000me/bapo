@@ -1,0 +1,151 @@
+
+/*
+ * Skin: Light Green
+ * -----------
+ */
+
+.skin-light-green .sidebar-menu>li {
+  background: #297d42;
+}
+
+.skin-light-green .main-header .navbar {
+  background-color: #ffffff;
+}
+.skin-light-green .main-header .navbar .nav > li > a {
+  color: #2a5c39;
+  font-weight: 600;
+}
+.skin-light-green .main-header .navbar .nav > li > a:hover,
+.skin-light-green .main-header .navbar .nav > li > a:active,
+.skin-light-green .main-header .navbar .nav > li > a:focus,
+.skin-light-green .main-header .navbar .nav .open > a,
+.skin-light-green .main-header .navbar .nav .open > a:hover,
+.skin-light-green .main-header .navbar .nav .open > a:focus,
+.skin-light-green .main-header .navbar .nav > .active > a {
+  background: #008d4c;
+  color: #f6f6f6;
+}
+.skin-light-green .main-header .navbar .sidebar-toggle {
+  color: #ffffff;
+}
+.skin-light-green .main-header .navbar .sidebar-toggle:hover {
+  color: #f6f6f6;
+  background: rgba(0, 0, 0, 0.1);
+}
+.skin-light-green .main-header .navbar .sidebar-toggle {
+  color: #297d42;
+}
+.skin-light-green .main-header .navbar .sidebar-toggle:hover {
+  background-color: #008d4c;
+}
+@media (max-width: 767px) {
+  .skin-light-green .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-light-green .main-header .navbar .dropdown-menu li a {
+    color: #fff;
+  }
+  .skin-light-green .main-header .navbar .dropdown-menu li a:hover {
+    background: #ffffff;
+  }
+}
+.skin-light-green .main-header .logo {
+  background-color: #ffffff;
+  color: #297d42;
+  border-bottom: 0 solid transparent;
+}
+.skin-light-green .main-header .logo:hover {
+  background-color: #ffffff;
+}
+.skin-light-green .main-header li.user-header {
+  background-color: #ffffff;
+}
+.skin-light-green .content-header {
+  background: transparent;
+}
+.skin-light-green .wrapper,
+.skin-light-green .main-sidebar,
+.skin-light-green .left-side {
+  background-color: #297d42;
+}
+.skin-light-green .user-panel > .info,
+.skin-light-green .user-panel > .info > a {
+  color: #fff;
+}
+.skin-light-green .sidebar-menu > li.header {
+  color: #2a5c39;
+  background: #ffffff;
+}
+.skin-light-green .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+}
+.skin-light-green .sidebar-menu > li:hover > a,
+.skin-light-green .sidebar-menu > li.active > a,
+.skin-light-green .sidebar-menu > li.menu-open > a {
+  color: #ffffffcf;
+  background: #2a5d39;
+}
+.skin-light-green .sidebar-menu > li.active > a {
+  border-left-color: #2a5d39;
+}
+.skin-light-green .sidebar-menu > li > .treeview-menu {
+  margin: 0 0px;
+  background: #2a5c39;
+  padding-left: 15px;
+}
+.skin-light-green .sidebar a {
+  color: #ffffff;
+}
+.skin-light-green .sidebar a:hover {
+  text-decoration: none;
+}
+.skin-light-green .sidebar-menu .treeview-menu > li > a {
+  color: #ffffffcf;
+}
+.skin-light-green .sidebar-menu .treeview-menu > li.active > a,
+.skin-light-green .sidebar-menu .treeview-menu > li > a:hover {
+  color: #ffffff;
+  font-weight: bold;
+}
+.skin-light-green .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #ffffff;
+  margin: 10px 10px;
+}
+.skin-light-green .sidebar-form input[type="text"],
+.skin-light-green .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-light-green .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-light-green .sidebar-form input[type="text"]:focus,
+.skin-light-green .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-light-green .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-light-green .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+
+.skin-light-green .sidebar-mini.sidebar-collapse .main-header .logo>.logo-mini {
+  color: #2a5c39;
+}
+
+.skin-light-green .treeview.menu-open>ul.treeview-menu {
+  padding-left: 15px;
+}
