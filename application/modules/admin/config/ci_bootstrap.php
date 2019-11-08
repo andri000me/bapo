@@ -162,7 +162,7 @@ $config['ci_bootstrap'] = array(
         array(
             'auth'		=> array('webmaster', 'admin', 'manager', 'staff'),
             'name'		=> 'Sign out',
-            'url'		=> 'panel/logout/',
+            'url'		=> 'admin/panel/logout/',
             'target'	=> '',
             'color'		=> 'text-red'
         ),
