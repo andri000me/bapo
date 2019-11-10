@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // default controller for this module
 $route['admin'] = 'home';
 $route['admin/login-ldap'] = 'Login/Ldap';
+$route['admin/login/forgot-password'] = 'Login/forgotPassword';
 //$route['admin/activity/category'] = 'Activity/category';
 
 // ROUTER SKKE
