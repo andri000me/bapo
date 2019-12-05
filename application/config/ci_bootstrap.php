@@ -14,103 +14,130 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['ci_bootstrap'] = array(
 
-	// Site name
-	'site_name' => 'CI Bootstrap 3',
+    // Site name
+    'site_name' => 'E-SAP Universitas Yarsi',
 
-	// Default page title prefix
-	'page_title_prefix' => '',
+    // Default page title prefix
+    'page_title_prefix' => '',
 
-	// Default page title
-	'page_title' => '',
+    // Default page title
+    'page_title' => '',
 
-	// Default meta data
-	'meta_data'	=> array(
-		'author'		=> '',
-		'description'	=> '',
-		'keywords'		=> ''
-	),
+    // Default meta data
+    'meta_data' => array(
+        'author' => '',
+        'description' => '',
+        'keywords' => ''
+    ),
 
-	// Default scripts to embed at page head or end
-	'scripts' => array(
-		'head'	=> array(
-		),
-		'foot'	=> array(
-			'assets/dist/frontend/lib.min.js',
-			'assets/dist/frontend/app.min.js'
-		),
-	),
+    // Default scripts to embed at page head or end
+    'scripts' => array(
+        'head' => array(
+            'assets/dist/frontend/js/jquery-1.11.1.min.js',
+        ),
+        'foot' => array(
+            'assets/dist/frontend/lib.min.js',
+            'assets/dist/frontend/app.min.js',
+            'assets/dist/frontend/js/jquery-2.1.1.min.js',
+            'assets/dist/frontend/js/bootstrap.min.js',
+            'assets/dist/frontend/js/jquery.prettyPhoto.js',
+            'assets/dist/frontend/js/jquery.isotope.min.js',
+            'assets/dist/frontend/js/wow.min.js',
+            'assets/dist/frontend/js/functions.js',
+        ),
+    ),
 
-	// Default stylesheets to embed at page head
-	'stylesheets' => array(
-		'screen' => array(
-			'assets/dist/frontend/lib.min.css',
-			'assets/dist/frontend/app.min.css'
-		)
-	),
+    // Default stylesheets to embed at page head
+    'stylesheets' => array(
+        'screen' => array(
+            // 'assets/dist/frontend/lib.min.css',
+            // 'assets/dist/frontend/app.min.css',
+            'assets/dist/frontend/css/bootstrap.min.css',
+            'assets/dist/frontend/css/font-awesome.min.css',
+            'assets/dist/frontend/css/animate.css',
+            'assets/dist/frontend/css/prettyPhoto.css',
+            'assets/dist/frontend/css/style.css',
+        )
+    ),
 
-	// Default CSS class for <body> tag
-	'body_class' => '',
-	
-	// Multilingual settings
-	'languages' => array(
-		'default'		=> 'en',
-		'autoload'		=> array('general'),
-		'available'		=> array(
-			'en' => array(
-				'label'	=> 'English',
-				'value'	=> 'english'
-			),
-			'zh' => array(
-				'label'	=> '繁體中文',
-				'value'	=> 'traditional-chinese'
-			),
-			'cn' => array(
-				'label'	=> '简体中文',
-				'value'	=> 'simplified-chinese'
-			),
-			'es' => array(
-				'label'	=> 'Español',
-				'value' => 'spanish'
-			)
-		)
-	),
+    // Default CSS class for <body> tag
+    'body_class' => '',
 
-	// Google Analytics User ID
-	'ga_id' => '',
+    // Multilingual settings
+    // 'languages' => array(
+    // 	'default'		=> 'en',
+    // 	'autoload'		=> array('general'),
+    // 	'available'		=> array(
+    // 		'en' => array(
+    // 			'label'	=> 'English',
+    // 			'value'	=> 'english'
+    // 		),
+    // 		'zh' => array(
+    // 			'label'	=> '繁體中文',
+    // 			'value'	=> 'traditional-chinese'
+    // 		),
+    // 		'cn' => array(
+    // 			'label'	=> '简体中文',
+    // 			'value'	=> 'simplified-chinese'
+    // 		),
+    // 		'es' => array(
+    // 			'label'	=> 'Español',
+    // 			'value' => 'spanish'
+    // 		)
+    // 	)
+    // ),
 
-	// Menu items
-	'menu' => array(
-		'home' => array(
-			'name'		=> 'Home',
-			'url'		=> '',
-		),
-	),
+    // Google Analytics User ID
+    'ga_id' => '',
 
-	// Login page
-	'login_url' => '',
+    // Menu items
+    'menu' => array(
+        'about' => array(
+            'name' => 'Tentang Kami',
+            'url' => '',
+        ),
+        'services' => array(
+            'name' => 'Pelayanan',
+            'url' => '',
+        ),
+        'galeri' => array(
+            'name' => 'Galeri',
+            'url' => '',
+        ),
+        'contact' => array(
+            'name' => 'Kontak Kami',
+            'url' => '',
+        ),
+        'signin' => array(
+            'name' => 'Masuk',
+            'url' => '',
+        ),
+    ),
 
-	// Restricted pages
-	'page_auth' => array(
-	),
+    // Login page
+    'login_url' => '',
 
-	// Email config
-	'email' => array(
-		'from_email'		=> '',
-		'from_name'			=> '',
-		'subject_prefix'	=> '',
-		
-		// Mailgun HTTP API
-		'mailgun_api'		=> array(
-			'domain'			=> '',
-			'private_api_key'	=> ''
-		),
-	),
+    // Restricted pages
+    'page_auth' => array(),
 
-	// Debug tools
-	'debug' => array(
-		'view_data'	=> FALSE,
-		'profiler'	=> FALSE
-	),
+    // Email config
+    'email' => array(
+        'from_email' => '',
+        'from_name' => '',
+        'subject_prefix' => '',
+
+        // Mailgun HTTP API
+        'mailgun_api' => array(
+            'domain' => '',
+            'private_api_key' => ''
+        ),
+    ),
+
+    // Debug tools
+    'debug' => array(
+        'view_data' => FALSE,
+        'profiler' => FALSE
+    ),
 );
 
 /*
