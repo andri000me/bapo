@@ -1,4 +1,4 @@
-<ol class="breadcrumb">
+<div class="breadcrumb">
 <?php
 	for ($i=0; $i<sizeof($breadcrumb); $i++)
 	{
@@ -16,4 +16,4 @@
 		}
 	}
 ?>
-</ol>
+</div>

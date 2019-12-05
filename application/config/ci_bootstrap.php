@@ -36,14 +36,14 @@ $config['ci_bootstrap'] = array(
             'assets/dist/frontend/js/jquery-1.11.1.min.js',
         ),
         'foot' => array(
-            'assets/dist/frontend/lib.min.js',
-            'assets/dist/frontend/app.min.js',
+            // 'assets/dist/frontend/lib.min.js',
+            // 'assets/dist/frontend/app.min.js',
             'assets/dist/frontend/js/jquery-2.1.1.min.js',
             'assets/dist/frontend/js/bootstrap.min.js',
             'assets/dist/frontend/js/jquery.prettyPhoto.js',
             'assets/dist/frontend/js/jquery.isotope.min.js',
             'assets/dist/frontend/js/wow.min.js',
-            'assets/dist/frontend/js/functions.js',
+            // 'assets/dist/frontend/js/functions.js',
         ),
     ),
 
@@ -92,25 +92,29 @@ $config['ci_bootstrap'] = array(
 
     // Menu items
     'menu' => array(
+        'home' => array(
+            'name' => 'Beranda',
+            'url' => 'home',
+        ),
         'about' => array(
             'name' => 'Tentang Kami',
-            'url' => '',
+            'url' => 'about',
         ),
         'services' => array(
             'name' => 'Pelayanan',
-            'url' => '',
+            'url' => 'services',
         ),
         'galeri' => array(
             'name' => 'Galeri',
-            'url' => '',
+            'url' => 'gallery',
         ),
         'contact' => array(
             'name' => 'Kontak Kami',
-            'url' => '',
+            'url' => 'contact',
         ),
         'signin' => array(
             'name' => 'Masuk',
-            'url' => '',
+            'url' => 'signin',
         ),
     ),
 
