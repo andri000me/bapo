@@ -14,38 +14,69 @@
                         <a href="<?= base_url() ?>"><h1><span>e-SAP</span> Universitas YARSI</h1></a>
                     </div>
                 </div>
-                
+
                 <div class="navbar-collapse collapse">
                     <div class="menu">
                         <ul class="nav nav-tabs" role="tablist">
-                            <?php foreach ($menu as $parent => $parent_params): ?>
+                            <!-- GUEST -->
+                            <?php if (isset($_SESSION['is_logged']) && !$_SESSION['is_logged']) { ?>
+                                <?php foreach ($menu as $parent => $parent_params): ?>
 
-                                <?php if (empty($parent_params['children'])): ?>
+                                    <?php if (empty($parent_params['children'])): ?>
 
-                                    <?php $active = ($ctrler == $parent || $current_uri == $parent_params['url']); ?>
-                                    <li role="presentation">
-                                        <a class="<?php echo $active == true ? 'active' : '' ?>" href='<?php echo $parent_params['url']; ?>'>
-                                            <?php echo $parent_params['name']; ?>
-                                        </a>
-                                    </li>
+                                        <?php $active = ($ctrler == $parent || $current_uri == $parent_params['url']); ?>
+                                        <li role="presentation">
+                                            <a class="<?php echo $active == true ? 'active' : '' ?>" href='<?php echo $parent_params['url']; ?>'>
+                                                <?php echo $parent_params['name']; ?>
+                                            </a>
+                                        </li>
 
-                                <?php else: ?>
+                                    <?php else: ?>
 
-                                    <?php $parent_active = ($ctrler == $parent); ?>
-                                    <li role="presentation" class='dropdown'>
-                                        <a data-toggle='dropdown' class='dropdown-toggle <?php ($parent_active) ? "active" : "" ?>' href='#'>
-                                            <?php echo $parent_params['name']; ?> <span class='caret'></span>
-                                        </a>
-                                        <ul role='menu' class='dropdown-menu'>
-                                            <?php foreach ($parent_params['children'] as $name => $url): ?>
-                                                <li><a href='<?php echo $url; ?>'><?php echo $name; ?></a></li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </li>
+                                        <?php $parent_active = ($ctrler == $parent); ?>
+                                        <li role="presentation" class='dropdown'>
+                                            <a data-toggle='dropdown' class='dropdown-toggle <?php ($parent_active) ? "active" : "" ?>' href='#'>
+                                                <?php echo $parent_params['name']; ?> <span class='caret'></span>
+                                            </a>
+                                            <ul role='menu' class='dropdown-menu'>
+                                                <?php foreach ($parent_params['children'] as $name => $url): ?>
+                                                    <li><a href='<?php echo $url; ?>'><?php echo $name; ?></a></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </li>
 
-                                <?php endif; ?>
+                                    <?php endif; ?>
 
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php } else { ?>
+
+                                <li role="presentation">
+                                    <a class="<?php echo ($ctrler == 'data_universitas' || $current_uri == 'data_universitas') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_universitas'>
+                                        Data Universitas
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="<?php echo ($ctrler == 'data_pengguna' || $current_uri == 'data_pengguna') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_pengguna'>
+                                        Data Pengguna
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="<?php echo ($ctrler == 'data_perkuliahan' || $current_uri == 'data_perkuliahan') == true ? 'active' : '' ?>" href='<? base_url() ?>data_perkuliahan'>
+                                        Data Perkuliahan
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="<?php echo ($ctrler == 'laporan' || $current_uri == 'laporan') == true ? 'active' : '' ?>" href='<? base_url() ?>laporan'>
+                                        Laporan
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href='<?= base_url() ?>signout'>
+                                        Keluar
+                                    </a>
+                                </li>
+
+                            <?php } ?>
                         </ul>
                         <?php // $this->load->view('_partials/language_switcher'); ?>
                     </div>

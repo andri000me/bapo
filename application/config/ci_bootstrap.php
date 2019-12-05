@@ -38,7 +38,7 @@ $config['ci_bootstrap'] = array(
         'foot' => array(
             // 'assets/dist/frontend/lib.min.js',
             // 'assets/dist/frontend/app.min.js',
-            'assets/dist/frontend/js/jquery-2.1.1.min.js',
+            // 'assets/dist/frontend/js/jquery-2.1.1.min.js',
             'assets/dist/frontend/js/bootstrap.min.js',
             'assets/dist/frontend/js/jquery.prettyPhoto.js',
             'assets/dist/frontend/js/jquery.isotope.min.js',

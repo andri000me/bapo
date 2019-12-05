@@ -16,7 +16,7 @@
     <div class="footer">
         <div class="container">
             <div class="social-icon">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <ul class="social-network">
                         <li><a href="https://www.facebook.com/pages/Fakultas-Teknologi-Informasi-Universitas-YARSI/489185404510832" class="fb tool-tip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#" class="twitter tool-tip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
@@ -27,16 +27,11 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-6 pull-right">
                 <div class="copyright">
-                    Copyright © <?= date('Y'); ?>. Universitas YARSI.<br>All Rights Reserved.
+                    <!--Copyright © --><? //= date('Y'); ?>
                     <div class="credits">
-                        <!--
-                            All the links in the footer should remain intact.
-                            You can delete the links only if you purchased the pro version.
-                            Licensing information: https://bootstrapmade.com/license/
-                            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Company
-                        -->
+                        Copyright © <?= date('Y'); ?>
                         <a href="http://fti.yarsi.ac.id/">Fakultas Teknologi Informasi</a> - <a href="http://yarsi.ac.id/">Universitas YARSI</a>
                     </div>
                 </div>

@@ -23,6 +23,10 @@ body {
 	overflow-x:hidden;
 }
 
+.groceryCrudTable {
+    color: #333;
+}
+
 hi,h2,h3,h4,h5,h6 {
 	color:#333;
 	line-height:1.1em;
@@ -538,7 +542,11 @@ a:hover {
 /* --- footer --- */
 .footer {
 	background:#1BBD36;
-	padding:15px 22px;
+	padding:15px -1px;
+    /*position: absolute;*/
+    bottom: 0;
+    width: 100%;
+    height: 85px;
 }
 
 ul.social-network {
@@ -558,7 +566,7 @@ ul.social-network li {
 }
 
 ul.social-network li a {	
-	color:#d0d0d0;	
+	color:#d0d0d0;
 }
 .social-network li:hover .fa-twitter {
   color: #00abf0;
