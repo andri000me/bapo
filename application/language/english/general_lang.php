@@ -4,10 +4,12 @@
 	$lang['current_language'] = "Current Language";
 
 	// Menu
-	$lang['home'] = "Home";
-	$lang['about_us'] = "About Us";
-	$lang['contact_us'] = "Contact Us";
-	$lang['example'] = "Example";
+	$lang['home'] = "Beranda";
+	$lang['about'] = "Tentang Kami";
+	$lang['services'] = "Pelayanan";
+	$lang['gallery'] = "Galeri";
+	$lang['contact_us'] = "Kontak Kami";
+	$lang['example'] = "Masuk";
 
 	// General terms
 	$lang['address'] = "Address";

@@ -1,0 +1,18 @@
+<div class="aboutus">
+    <div class="container">
+        <div class="col-md-6 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 300ms; -moz-animation-delay: 300ms; animation-delay: 300ms;">
+            <h2>Tentang Kami</h2>
+            <img src="<?= base_url() ?>assets/images/yarsi.jpg" class="img-responsive">
+            <p>Universitas YARSI ialah perguruan tinggi Islam swasta yang berada di Cempaka Putih, Jakarta Pusat. Kampus Universitas YARSI berada di pusat kota Jakarta dengan luas lahan kampus 25.000 m² dan luas bangunan 19.300 m² yang terdiri dari berbagai bangunan. Selain itu YARSI telah mempunyai kampus baru Universitas YARSI bertingkat 12 lantai. Saat ini sedang dibangun Rumah Sakit Gigi dan Mulut Pendidikan Universitas YARSI dan Rumah Sakit Pendidikan Universitas YARSI dengan penambahan luas bangunan menjadi 185.000 m2.
+            </p>
+        </div>
+
+        <div class="col-md-6 wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="600ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 600ms; -moz-animation-delay: 600ms; animation-delay: 600ms;">
+            <h2>Sejarah Universitas YARSI</h2>
+            <p>Kedokteran Universitas Indonesia Jakarta untuk bekerja sama dalam bidang pendidikan dan pengajaran Sekolah Tinggi Kedokteran YARSI Jakarta. YARSI pada waktu itu menggunakan seluruh sarana dan prasarana FK UI seperti ruang belajar/ kuliah, laboratorium, alat-alat yang mendukung perkuliahan kedokteran, dan perpustakaan. Tahun 1968 merupakan tahun mula didirikannya bangunan YARSI yang beralamat di Jalan Letjen Suprapto, Cempaka Putih, Jakarta Pusat. Peletakan batu pertama pembangunan gedung YARSI dilakukan oleh almarhumah ibu Hj. Tien Soeharto.
+            </p><p>Pada mulanya ia lahir YARSI belum memiliki tanah dan bangunan sendiri. YARSI masih mengandalkan Fakultas dengan prestasi YARSI sebagai sekolah kedokteran, para pendiri memutuskan untuk membuat fakultas baru. Sesuai dengan rencana pengembangan Universitas YARSI Jakarta (sekarang bernama Universitas YARSI) tahun 1988-1989 s.d. 1998-1999, tiga fakultas dibentuk, yaitu Fakultas Ekonomi, Fakultas Hukum, dan Fakultas Teknologi Industri (sekarang bernama Fakultas Teknologi Informasi). Dengan berdirinya tiga fakultas tersebut, Sekolah Tinggi Kedokteran YARSI Jakarta telah berubah menjadi Fakultas Kedokteran yang berada di dalam bagian Universitas YARSI bersama dengan tiga fakultas lain tersebut. Semua program studi di Universitas YARSI telah terakreditasi BAN-PT.
+            </p>
+            <p>Pada tahun 2007 Universitas YARSI kembali membuka satu fakultas baru yaitu Fakultas Psikologi dan dioperasikan sejak tahun akademik 2007-2008. Sampai saat ini Universitas YARSI memiliki lima fakultas. Tahun 2012 Universitas YARSI telah dipercaya oleh Kementerian Pendidikan dan Kebudayaan Republik Indonesia untuk membuka Program Studi Ilmu Kedokteran Gigi (Prodi IKG). Kepanjangan akronim YARSI - sejak ia sudah tidak memiliki rumah sakit sendiri - adalah tidak berlaku lagi. YARSI hanyalah sebuah nama YARSI di Jakarta. Untuk menamakan YARSI sebagai yayasan, ia disebut dengan Yayasan YARSI.</p>
+        </div>
+    </div>
+</div>

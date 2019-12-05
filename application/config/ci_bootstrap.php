@@ -72,18 +72,6 @@ $config['ci_bootstrap'] = array(
     // 			'label'	=> 'English',
     // 			'value'	=> 'english'
     // 		),
-    // 		'zh' => array(
-    // 			'label'	=> '繁體中文',
-    // 			'value'	=> 'traditional-chinese'
-    // 		),
-    // 		'cn' => array(
-    // 			'label'	=> '简体中文',
-    // 			'value'	=> 'simplified-chinese'
-    // 		),
-    // 		'es' => array(
-    // 			'label'	=> 'Español',
-    // 			'value' => 'spanish'
-    // 		)
     // 	)
     // ),
 
