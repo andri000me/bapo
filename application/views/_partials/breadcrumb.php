@@ -18,7 +18,10 @@
                 $name = 'Galeri';
                 break;
             case 'Contact':
-                $name = 'Contact';
+                $name = 'Kontak Kami';
+                break;
+            case 'Signin':
+                $name = 'Masuk';
                 break;
             default:
                 $name;
