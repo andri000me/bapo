@@ -46,6 +46,7 @@ class Api extends MY_Controller
                     $nama = !empty($dosen->nama_mahasiswa) ? $dosen->nama_mahasiswa : null;
                 }
 
+                $_SESSION['is_logged'] = true;
                 $_SESSION['username'] = $data['username'];
                 $_SESSION['status'] = $data['status'];
                 $_SESSION['npm'] = $npm;
