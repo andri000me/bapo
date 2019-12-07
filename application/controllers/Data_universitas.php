@@ -6,6 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Data_universitas extends MY_Controller
 {
+    // Constructor
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->checkRole();
+    }
 
     // Grocery CRUD - Data Universitas
     public function index()

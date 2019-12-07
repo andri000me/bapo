@@ -86,14 +86,23 @@ class Api extends MY_Controller
         $nik = $_POST['nik'];
         $nik_old = $_POST['nik_old'];
 
-        if ($role === 'tu_univ') {
-            $this->db->select('nik');
-            $this->db->where('nik', $nik);
-            $this->db->where('kd_prodi', '');
-            $query = $this->db->get('mst_tata_usaha');
-        } else {
-            return;
-        }
+        // if ($role === 'tu_univ') {
+        //     $this->db->select('nik');
+        //     $this->db->where('nik', $nik);
+        //     $this->db->where('kd_prodi', '');
+        //     $query = $this->db->get('mst_tata_usaha');
+        // } else if ($role === 'tu_prodi') {
+        //     $this->db->select('nik');
+        //     $this->db->where('nik', $nik);
+        //     $this->db->where('kd_prodi', '');
+        //     $query = $this->db->get('mst_tata_usaha');
+        // } else {
+        //     return;
+        // }
+
+            $this->db->select('kd_user');
+            $this->db->where('kd_user', $nik);
+            $query = $this->db->get('user_akses');
 
         if ($data = $query->row_array()) {
             echo json_encode([
@@ -106,6 +115,34 @@ class Api extends MY_Controller
                 'status' => 'success',
                 'code' => 200,
                 'message' => 'NIK Tersedia'
+            ]);
+        }
+
+        return;
+    }
+
+    public function get_list_prodi()
+    {
+        $this->load->library('rsa');
+
+        $kd_fakultas = isset($_GET['kd_fakultas']) ? $_GET['kd_fakultas'] : null;
+
+        if (!empty($kd_fakultas)) {
+            $this->db->select('*');
+            $this->db->where('kd_fakultas', $kd_fakultas);
+            $query = $this->db->get('mst_program_studi');
+
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Data Tersedia',
+                'list' => $query->result()
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Data tidak tersedia'
             ]);
         }
 

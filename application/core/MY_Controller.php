@@ -386,6 +386,16 @@ class MY_Controller extends MX_Controller
         $this->mViewData['crud_output'] = $crud_data->output;
         $this->render('crud', 'with_breadcrumb_logged');
     }
+
+    // Check rola access
+    public function checkRole() {
+        if (empty($_SESSION['is_logged']) || $_SESSION['is_logged'] == false) {
+            $this->load->helper('url');
+            $_SESSION['is_logged'] = false;
+
+            redirect('/signin');
+        }
+    }
 }
 
 // include base controllers

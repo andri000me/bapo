@@ -12,7 +12,7 @@ class Data_pengguna extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->helper('url');
+        $this->checkRole();
     }
 
     public function index()
@@ -27,7 +27,6 @@ class Data_pengguna extends MY_Controller
         $this->render('data_pengguna/tata_usaha', 'with_breadcrumb');
     }
 
-    // Grocery CRUD - Data Pengguna Tata Usaha Universitas
     public function tata_usaha_universitas()
     {
         // $crud = $this->generate_crud('user_akses', 'Data Tata Usaha Universitas');
@@ -198,13 +197,160 @@ class Data_pengguna extends MY_Controller
         $this->render('data_pengguna/tu/univ/index', 'with_breadcrumb_logged');
     }
 
-    // Grocery CRUD - Data Pengguna Tata Usaha Program Studi
     public function tata_usaha_program_studi()
     {
-        $crud = $this->generate_crud('mst_fakultas', 'Data Tata Usaha Program Studi');
+        $state = isset($_GET['state']) ? $_GET['state'] : null;
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
 
+        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
+            $this->load->library('rsa');
+
+            if ($state === 'add') {
+                if ($_POST) {
+                    $nik = $_POST['nik'];
+                    $kd_prodi = $_POST['kd_prodi'];
+                    $nama_tata_usaha = $_POST['nama_tata_usaha'];
+                    $username = $_POST['username'];
+                    $password = $this->rsa->encrypt($_POST['password']);
+
+                    $this->db->trans_begin();
+                    $this->db->insert('mst_tata_usaha', array(
+                        'nik' => $nik,
+                        'kd_prodi' => $kd_prodi,
+                        'nama_tata_usaha' => $nama_tata_usaha
+                    ));
+
+                    $this->db->insert('user_akses', array(
+                        'kd_user' => $nik,
+                        'username' => $username,
+                        'password' => $password,
+                        'status' => 'Tata Usaha'
+                    ));
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    redirect('data_pengguna/tata_usaha_program_studi');
+                    return;
+                }
+
+                $this->db->select('*');
+                $query = $this->db->get('mst_fakultas');
+                $this->mViewData['list_fakultas'] = $query->result();
+                $this->mViewData['title'] = 'Tambah Data Tata Usaha Program Studi';
+                $this->render('data_pengguna/tu/prodi/add', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'edit' && !empty($id)) {
+                if ($_POST) {
+                    $nik = $_POST['nik'];
+                    $nik_old = $_POST['nik_old'];
+                    $kd_prodi = $_POST['kd_prodi'];
+                    $nama_tata_usaha = $_POST['nama_tata_usaha'];
+                    $username = $_POST['username'];
+                    $password = $_POST['password'];
+
+                    $this->db->trans_begin();
+                    $this->db->where('nik', $nik_old);
+                    $this->db->update('mst_tata_usaha', array(
+                        'nik' => $nik,
+                        'kd_prodi' => $kd_prodi,
+                        'nama_tata_usaha' => $nama_tata_usaha
+                    ));
+
+                    if (!empty($_POST['password'])) {
+                        $dataUserAkses = array(
+                            'kd_user' => $nik,
+                            'username' => $username,
+                            'password' => $this->rsa->encrypt($password),
+                            'status' => 'Tata Usaha'
+                        );
+                    } else {
+                        $dataUserAkses = array(
+                            'kd_user' => $nik,
+                            'username' => $username,
+                            'status' => 'Tata Usaha'
+                        );
+                    }
+
+                    $this->db->where('kd_user', $nik_old);
+                    $this->db->update('user_akses', $dataUserAkses);
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    redirect('data_pengguna/tata_usaha_program_studi');
+                    return;
+                }
+
+                $this->db->select('f.*');
+                $query2 = $this->db->get('mst_fakultas as f');
+                $this->mViewData['list_fakultas'] = $query2->result();
+
+                $this->db->select('*');
+                $query2 = $this->db->get('mst_program_studi');
+                $this->mViewData['list_prodi'] = $query2->result();
+
+                $this->db->select('b.kd_user AS nik, c.kd_prodi, d.kd_fakultas, a.nama_tata_usaha, b.username');
+                $this->db->from('mst_tata_usaha as a');
+                $this->db->join('user_akses as b', 'a.nik = b.kd_user AND a.kd_prodi <> ""');
+                $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
+                $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
+                $this->db->where('b.kd_user', $id);
+                $query = $this->db->get();
+                $this->mViewData['data'] = $query->row();
+
+                $this->mViewData['title'] = 'Edit Data Tata Usaha Program Studi';
+                $this->render('data_pengguna/tu/prodi/edit', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'delete' && !empty($id)) {
+                $this->db->trans_begin();
+                $this->db->delete('mst_tata_usaha', array('nik' => $id));
+                $this->db->delete('user_akses', array('kd_user' => $id));
+
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $_SESSION['state_status_delete'] = true;
+                } else {
+                    $this->db->trans_rollback();
+                    $_SESSION['state_status_delete'] = false;
+                }
+                redirect('data_pengguna/tata_usaha_program_studi');
+                return;
+            }
+        }
+
+        $this->db->select('b.kd_user, c.nama_prodi, d.nama_fakultas, a.nama_tata_usaha, b.username');
+        $this->db->from('mst_tata_usaha as a');
+        $this->db->join('user_akses as b', 'a.nik = b.kd_user AND a.kd_prodi <> ""');
+        $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
+        $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
+        $query = $this->db->get();
+
+        $this->mViewData['data'] = $query->result();
         $this->mPageTitle = 'Data Tata Usaha Program Studi';
-        $this->render_crud();
+
+        $cssFile = [
+            'assets/dist/dataTables/datatables.min.css',
+        ];
+        $this->add_stylesheet($cssFile, true);
+
+        $jsFile = [
+            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
+            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
+        ];
+        $this->add_script($jsFile, TRUE, 'foot');
+
+        $this->render('data_pengguna/tu/prodi/index', 'with_breadcrumb_logged');
     }
 
     public function dosen()
