@@ -43,7 +43,7 @@ $config['ci_bootstrap'] = array(
             'assets/dist/frontend/js/jquery.prettyPhoto.js',
             'assets/dist/frontend/js/jquery.isotope.min.js',
             'assets/dist/frontend/js/wow.min.js',
-            'assets/dist/frontend/js/functions.js',
+            // 'assets/dist/frontend/js/functions.js',
             'assets/dist/frontend/contactform/contactform.js',
         ),
     ),

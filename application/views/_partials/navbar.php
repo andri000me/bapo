@@ -19,7 +19,7 @@
                     <div class="menu">
                         <ul class="nav nav-tabs" role="tablist">
                             <!-- GUEST -->
-                            <?php if (isset($_SESSION['is_logged']) && !$_SESSION['is_logged']) { ?>
+                            <?php if (!isset($_SESSION['is_logged']) || (isset($_SESSION['is_logged']) && !$_SESSION['is_logged'])) { ?>
                                 <?php foreach ($menu as $parent => $parent_params): ?>
 
                                     <?php if (empty($parent_params['children'])): ?>

@@ -76,52 +76,39 @@ class Api extends MY_Controller
         }
 
         return;
+    }
 
-        // if (!$result = $mysqli->query($sql1)) {
-        //     $message = "Sorry, the website is experiencing problems.";
-        //     echo "<script type='text/javascript'>alert('$message');</script>";
-        //     header('location:../signin.php?fail=' . $mysqli->errno);
-        // } else {
-        //     if ($result->num_rows == 1) {
-        //         $data = $result->fetch_assoc();
-        //
-        //         if ($password == $this->rsa->decrypt($data['password'])) {
-        //             $_SESSION['username'] = $data['username'];
-        //             $_SESSION['status'] = $data['status'];
-        //             $_SESSION['nik'] = $data['nik'];
-        //             $_SESSION['nama'] = $data['nama_tata_usaha'];
-        //             $_SESSION['kd_prodi'] = $data['kd_prodi'];
-        //             header('location:../index.php');
-        //         } else {
-        //             header('location:../signin.php?fail=1');
-        //         }
-        //     } else {
-        //         if (!$result2 = $mysqli->query($sql2)) {
-        //             $message2 = "Sorry, the website is experiencing problems.";
-        //             echo "<script type='text/javascript'>alert('$message2');</script>";
-        //             header('location:../signin.php?fail=' . $mysqli->errno);
-        //         } else {
-        //             if ($result2->num_rows == 1) {
-        //                 $data2 = $result2->fetch_assoc();
-        //
-        //                 if ($password == $this->rsa->decrypt($data2['password'])) {
-        //                     $_SESSION['username'] = $data2['username'];
-        //                     $_SESSION['status'] = $data2['status'];
-        //                     $_SESSION['nik'] = $data2['nik'];
-        //                     $_SESSION['nama'] = $data2['nama_dosen'];
-        //                     $_SESSION['jabatan'] = $data2['jabatan'];
-        //                     $_SESSION['kd_prodi'] = $data2['kd_prodi'];
-        //                     header('location:../index.php');
-        //                 } else {
-        //                     header('location:../signin.php?fail=1');
-        //                 }
-        //             } else {
-        //                 header('location:../signin.php?fail=2');
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // echo json_encode($result);
+    public function check_availability_nik()
+    {
+        $this->load->library('rsa');
+
+        $role = $_POST['role'];
+        $nik = $_POST['nik'];
+        $nik_old = $_POST['nik_old'];
+
+        if ($role === 'tu_univ') {
+            $this->db->select('nik');
+            $this->db->where('nik', $nik);
+            $this->db->where('kd_prodi', '');
+            $query = $this->db->get('mst_tata_usaha');
+        } else {
+            return;
+        }
+
+        if ($data = $query->row_array()) {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'NIK Tidak Tersedia'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'NIK Tersedia'
+            ]);
+        }
+
+        return;
     }
 }

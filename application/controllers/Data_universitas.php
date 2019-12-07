@@ -13,6 +13,7 @@ class Data_universitas extends MY_Controller
         $crud = $this->generate_crud('mst_fakultas', 'Data Universitas');
         // $crud->display_as('kd_fakulas', 'Kode Fakultas');
         // $crud->display_as('nama_fakultas', 'Nama Fakultas');
+        $crud->unset_export();
 
         $this->mPageTitle = 'Data Universitas';
         $this->render_crud();
