@@ -3,7 +3,7 @@
         <div class="panel panel-default">
 
             <div align="right">
-                <a href="<?= base_url() ?>data_pengguna/dosen?state=add">
+                <a href="<?= base_url() ?>data_pengguna/dosen?state=add&state_fakultas=<?= $state_fakultas ?>">
                     <img src="<?= base_url() ?>assets/images/add_green.png" width="80px" height="90px" style="margin-right:120px; margin-top:10px;">
                 </a>
             </div>

@@ -359,6 +359,7 @@ class Data_pengguna extends MY_Controller
         $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
         $state = isset($_GET['state']) ? $_GET['state'] : null;
         $id = isset($_GET['id']) ? $_GET['id'] : null;
+        $this->mViewData['state_fakultas'] = $state_fakultas;
 
         if ($state === 'add' || $state === 'edit' || $state === 'delete') {
             $this->load->library('rsa');
@@ -368,6 +369,7 @@ class Data_pengguna extends MY_Controller
                 if ($_POST) {
                     $nik = $_POST['nik'];
                     $kd_prodi = $_POST['kd_prodi'];
+                    $kd_fakultas = $_POST['nama_fakultas'];
                     $nama_dosen = $_POST['nama_dosen'];
                     $jabatan = $_POST['jabatan'];
                     $mata_kuliah = $_POST['mata_kuliah'];
@@ -398,7 +400,7 @@ class Data_pengguna extends MY_Controller
                         $_SESSION['state_status'] = false;
                     }
 
-                    redirect($this->agent->referrer());
+                    redirect('data_pengguna/dosen/index?state_fakultas=' . $kd_fakultas);
                     return;
                 }
 
@@ -413,6 +415,7 @@ class Data_pengguna extends MY_Controller
                     $nik = $_POST['nik'];
                     $nik_old = $_POST['nik_old'];
                     $kd_prodi = $_POST['kd_prodi'];
+                    $kd_fakultas = $_POST['nama_fakultas'];
                     $nama_dosen = $_POST['nama_dosen'];
                     $jabatan = $_POST['jabatan'];
                     $mata_kuliah = $_POST['mata_kuliah'];
@@ -455,7 +458,7 @@ class Data_pengguna extends MY_Controller
                         $_SESSION['state_status'] = false;
                     }
 
-                    redirect($this->agent->referrer());
+                    redirect('data_pengguna/dosen/index?state_fakultas=' . $kd_fakultas);
                     return;
                 }
 
