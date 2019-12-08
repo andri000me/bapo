@@ -827,4 +827,143 @@ class Data_pengguna extends MY_Controller
 
         $this->render('data_pengguna/koordinator_rmk/index', 'with_breadcrumb_logged');
     }
+
+    public function dpt()
+    {
+        $state = isset($_GET['state']) ? $_GET['state'] : null;
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
+            $this->load->library('rsa');
+
+            if ($state === 'add') {
+                if ($_POST) {
+                    $nik = $_POST['nik'];
+                    // $kd_prodi = $_POST['kd_prodi'];
+                    $nama_dpt = $_POST['nama_dpt'];
+                    $username = $_POST['username'];
+                    $password = $this->rsa->encrypt($_POST['password']);
+
+                    $this->db->trans_begin();
+                    $this->db->insert('mst_dpt', array(
+                        'nik' => $nik,
+                        'kd_prodi' => '',
+                        'nama_dpt' => $nama_dpt
+                    ));
+
+                    $this->db->insert('user_akses', array(
+                        'kd_user' => $nik,
+                        'username' => $username,
+                        'password' => $password,
+                        'status' => 'DPT'
+                    ));
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    redirect('data_pengguna/dpt');
+                    return;
+                }
+
+                $this->mViewData['title'] = 'Tambah Data DPT';
+                $this->render('data_pengguna/dpt/add', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'edit' && !empty($id)) {
+                if ($_POST) {
+                    $nik = $_POST['nik'];
+                    $nik_old = $_POST['nik_old'];
+                    // $kd_prodi = $_POST['kd_prodi'];
+                    $nama_dpt = $_POST['nama_dpt'];
+                    $username = $_POST['username'];
+                    $password = $_POST['password'];
+
+                    $this->db->trans_begin();
+                    $this->db->where('nik', $nik_old);
+                    $this->db->update('mst_dpt', array(
+                        'nik' => $nik,
+                        'kd_prodi' => '',
+                        'nama_dpt' => $nama_dpt
+                    ));
+
+                    if (!empty($_POST['password'])) {
+                        $dataUserAkses = array(
+                            'kd_user' => $nik,
+                            'username' => $username,
+                            'password' => $this->rsa->encrypt($password),
+                            'status' => 'DPT'
+                        );
+                    } else {
+                        $dataUserAkses = array(
+                            'kd_user' => $nik,
+                            'username' => $username,
+                            'status' => 'DPT'
+                        );
+                    }
+
+                    $this->db->where('kd_user', $nik_old);
+                    $this->db->update('user_akses', $dataUserAkses);
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    redirect('data_pengguna/dpt');
+                    return;
+                }
+
+                $this->db->select('ua.kd_user AS nik, ua.username, tu.nama_dpt');
+                $this->db->from('mst_dpt as tu');
+                $this->db->join('user_akses as ua', 'tu.nik = ua.kd_user AND tu.kd_prodi = ""');
+                $this->db->where('ua.kd_user', $id);
+                $query = $this->db->get();
+                $this->mViewData['data'] = $query->row();
+                $this->mViewData['title'] = 'Edit Data DPT';
+                $this->render('data_pengguna/dpt/edit', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'delete' && !empty($id)) {
+                $this->db->trans_begin();
+                $this->db->delete('mst_dpt', array('nik' => $id));
+                $this->db->delete('user_akses', array('kd_user' => $id));
+
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $_SESSION['state_status_delete'] = true;
+                } else {
+                    $this->db->trans_rollback();
+                    $_SESSION['state_status_delete'] = false;
+                }
+                redirect('data_pengguna/dpt');
+                return;
+            }
+        }
+
+        $this->db->select('ua.kd_user, ua.username, tu.nama_dpt');
+        $this->db->from('mst_dpt as tu');
+        $this->db->join('user_akses as ua', 'tu.nik = ua.kd_user AND tu.kd_prodi = ""');
+        $query = $this->db->get();
+        $this->mViewData['data'] = $query->result();
+        $this->mPageTitle = 'Data Pengguna DPT';
+
+        $cssFile = [
+            'assets/dist/dataTables/datatables.min.css',
+        ];
+        $this->add_stylesheet($cssFile, true);
+
+        $jsFile = [
+            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
+            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
+        ];
+        $this->add_script($jsFile, TRUE, 'foot');
+
+        $this->render('data_pengguna/dpt/index', 'with_breadcrumb_logged');
+    }
 }
