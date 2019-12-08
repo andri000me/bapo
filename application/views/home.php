@@ -25,40 +25,40 @@
     </div><!--/.carousel-->
 </section>
 
-<div class="feature">
-    <div class="container">
-        <div class="text-center">
-            <div class="col-md-3">
-                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 300ms; -moz-animation-delay: 300ms; animation-delay: 300ms;">
-                    <i class="fa fa-book"></i>
-                    <h2>Elektronik SAP</h2>
-                    <p></p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="600ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 600ms; -moz-animation-delay: 600ms; animation-delay: 600ms;">
-                    <i class="fa fa-laptop"></i>
-                    <h2>Elektronik Pelaksanaan Perkuliahan</h2>
-                    <p></p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="900ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 900ms; -moz-animation-delay: 900ms; animation-delay: 900ms;">
-                    <i class="fa fa-heart-o"></i>
-                    <h2>Elektronik Absensi</h2>
-                    <p></p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="1200ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 1200ms; -moz-animation-delay: 1200ms; animation-delay: 1200ms;">
-                    <i class="fa fa-cloud"></i>
-                    <h2>Elektronik Laporan</h2>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="feature">-->
+<!--    <div class="container">-->
+<!--        <div class="text-center">-->
+<!--            <div class="col-md-3">-->
+<!--                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="300ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 300ms; -moz-animation-delay: 300ms; animation-delay: 300ms;">-->
+<!--                    <i class="fa fa-book"></i>-->
+<!--                    <h2>Elektronik SAP</h2>-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3">-->
+<!--                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="600ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 600ms; -moz-animation-delay: 600ms; animation-delay: 600ms;">-->
+<!--                    <i class="fa fa-laptop"></i>-->
+<!--                    <h2>Elektronik Pelaksanaan Perkuliahan</h2>-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3">-->
+<!--                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="900ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 900ms; -moz-animation-delay: 900ms; animation-delay: 900ms;">-->
+<!--                    <i class="fa fa-heart-o"></i>-->
+<!--                    <h2>Elektronik Absensi</h2>-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-3">-->
+<!--                <div class="hi-icon-wrap hi-icon-effect wow fadeInDown animated" data-wow-duration="1000ms" data-wow-delay="1200ms" style="visibility: visible;-webkit-animation-duration: 1000ms; -moz-animation-duration: 1000ms; animation-duration: 1000ms;-webkit-animation-delay: 1200ms; -moz-animation-delay: 1200ms; animation-delay: 1200ms;">-->
+<!--                    <i class="fa fa-cloud"></i>-->
+<!--                    <h2>Elektronik Laporan</h2>-->
+<!--                    <p></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="about">
     <div class="container">
