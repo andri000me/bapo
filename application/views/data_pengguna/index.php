@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-6">
             <h2 class="text-center">
-                <a href="<?= base_url() ?>data_pengguna/rmk">
+                <a href="<?= base_url() ?>data_pengguna/koordinator_rmk">
                     Koordinator RMK
                 </a>
             </h2>

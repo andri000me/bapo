@@ -3,7 +3,7 @@
         <div class="panel panel-default">
 
             <div align="right">
-                <a href="<?= base_url() ?>data_pengguna/tata_usaha_program_studi?state=add">
+                <a href="<?= base_url() ?>data_pengguna/kps?state=add">
                     <img src="<?= base_url() ?>assets/images/add_green.png" width="80px" height="90px" style="margin-right:120px; margin-top:10px;">
                 </a>
             </div>
@@ -24,8 +24,6 @@
                     <tr>
                         <th>No</th>
                         <th>NIK</th>
-                        <th>Program Studi</th>
-                        <th>Fakultas</th>
                         <th>Nama</th>
                         <th>Nama Pengguna</th>
                         <th>Opsi</th>
@@ -40,16 +38,14 @@
                         <tr>
                             <td><?= ++$no ?></td>
                             <td><?= $val->kd_user ?></td>
-                            <td><?= $val->nama_prodi ?></td>
-                            <td><?= $val->nama_fakultas ?></td>
-                            <td><?= $val->nama_tata_usaha ?></td>
+                            <td><?= $val->nama_kps ?></td>
                             <td><?= $val->username ?></td>
                             <td>
-                                <a href="<?= base_url() ?>data_pengguna/tata_usaha_program_studi?state=edit&id=<?= $val->kd_user ?>">
+                                <a href="<?= base_url() ?>data_pengguna/kps?state=edit&id=<?= $val->kd_user ?>">
                                     <img src="<?= base_url() ?>assets/images/edit_green.png" style="margin-left:10px;" width="30" height="30">
                                 </a>
 
-                                <a id="delete-row" href="<?= base_url() ?>data_pengguna/tata_usaha_program_studi?state=delete&id=<?= $val->kd_user ?>" onclick="return deleteConfirmation()">
+                                <a id="delete-row" href="<?= base_url() ?>data_pengguna/kps?state=delete&id=<?= $val->kd_user ?>" onclick="return deleteConfirmation()">
                                     <img src="<?= base_url() ?>assets/images/delete_green.png" style="margin-left:10px;" width="30" height="30">
                                 </a>
                             </td>
