@@ -100,9 +100,9 @@ class Api extends MY_Controller
         //     return;
         // }
 
-            $this->db->select('kd_user');
-            $this->db->where('kd_user', $nik);
-            $query = $this->db->get('user_akses');
+        $this->db->select('kd_user');
+        $this->db->where('kd_user', $nik);
+        $query = $this->db->get('user_akses');
 
         if ($data = $query->row_array()) {
             echo json_encode([
@@ -143,6 +143,58 @@ class Api extends MY_Controller
                 'status' => 'error',
                 'code' => 404,
                 'message' => 'Data tidak tersedia'
+            ]);
+        }
+
+        return;
+    }
+
+    public function check_availability_kd_ruang()
+    {
+        $kd_ruang = $_POST['kd_ruang'];
+
+        $this->db->select('kd_ruang');
+        $this->db->where('kd_ruang', $kd_ruang);
+        $query = $this->db->get('ruang');
+
+        if ($data = $query->row_array()) {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Kode Ruang Tidak Tersedia'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Kode Ruang Tersedia'
+            ]);
+        }
+
+        return;
+    }
+
+    public function get_list_mata_kuliah()
+    {
+        $kd_fakultas = $_GET['kd_fakultas'];
+        $this->db->select('a.nama_mata_kuliah as mata_kuliah');
+        $this->db->from('mata_kuliah as a');
+        $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi');
+        $this->db->where('b.kd_fakultas', $kd_fakultas);
+        $query = $this->db->get();
+
+        if ($data = $query->result()) {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Mata Kuliah Tersedia',
+                'list' => $data
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Mata Kuliah Tidak Tersedia'
             ]);
         }
 

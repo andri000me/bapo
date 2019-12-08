@@ -61,12 +61,12 @@
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a class="<?php echo ($ctrler == 'data_perkuliahan' || $current_uri == 'data_perkuliahan') == true ? 'active' : '' ?>" href='<? base_url() ?>data_perkuliahan'>
+                                    <a class="<?php echo ($ctrler == 'data_perkuliahan' || $current_uri == 'data_perkuliahan') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_perkuliahan'>
                                         Data Perkuliahan
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a class="<?php echo ($ctrler == 'laporan' || $current_uri == 'laporan') == true ? 'active' : '' ?>" href='<? base_url() ?>laporan'>
+                                    <a class="<?php echo ($ctrler == 'laporan' || $current_uri == 'laporan') == true ? 'active' : '' ?>" href='<?= base_url() ?>laporan'>
                                         Laporan
                                     </a>
                                 </li>
