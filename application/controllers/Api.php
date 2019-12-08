@@ -149,6 +149,7 @@ class Api extends MY_Controller
         return;
     }
 
+    // Ruang Kelas
     public function check_availability_kd_ruang()
     {
         $kd_ruang = $_POST['kd_ruang'];
@@ -195,6 +196,61 @@ class Api extends MY_Controller
                 'status' => 'error',
                 'code' => 404,
                 'message' => 'Mata Kuliah Tidak Tersedia'
+            ]);
+        }
+
+        return;
+    }
+
+    // Ruang Laboratorium
+    public function check_availability_kd_ruang_lab()
+    {
+        $kd_ruang = $_POST['kd_ruang'];
+
+        $this->db->select('kd_ruang');
+        $this->db->where('kd_ruang', $kd_ruang);
+        $query = $this->db->get('laboratorium');
+
+        if ($data = $query->row_array()) {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Kode Lab Tidak Tersedia'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Kode Lab Tersedia'
+            ]);
+        }
+
+        return;
+    }
+
+    // Get list dosen by kd_prodi
+    public function get_list_dosen()
+    {
+        $kd_fakultas = $_GET['kd_fakultas'];
+
+        $this->db->select('a.nik, a.nama_dosen');
+        $this->db->from('mst_dosen as a');
+        $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi');
+        $this->db->where('b.kd_fakultas', $kd_fakultas);
+        $query = $this->db->get();
+
+        if ($data = $query->result()) {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 200,
+                'message' => 'Data Tersedia',
+                'list' => $data
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 404,
+                'message' => 'Data tidak Tersedia'
             ]);
         }
 
