@@ -66,7 +66,7 @@
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a class="<?php echo ($ctrler == 'laporan' || $current_uri == 'laporan') == true ? 'active' : '' ?>" href='<?= base_url() ?>laporan'>
+                                    <a class="<?php echo ($ctrler == 'data_laporan' || $current_uri == 'data_laporan') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_laporan'>
                                         Laporan
                                     </a>
                                 </li>
