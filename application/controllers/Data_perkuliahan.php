@@ -200,14 +200,14 @@ class Data_perkuliahan extends MY_Controller
                     $kd_ruang = $_POST['kd_ruang'];
                     $kd_prodi = $_POST['kd_prodi'];
                     $nama_ruang = $_POST['nama_ruang'];
-                    $mata_kuliah = $_POST['mata_kuliah'];
+                    $mata_kuliah = !empty($_POST['mata_kuliah']) ? json_encode($_POST['mata_kuliah']) : '';
 
                     $this->db->trans_begin();
                     $this->db->insert('ruang', array(
                         'kd_ruang' => $kd_ruang,
                         'kd_prodi' => $kd_prodi,
                         'nama_ruang' => $nama_ruang,
-                        'mata_kuliah' => json_encode($mata_kuliah)
+                        'mata_kuliah' => $mata_kuliah
                     ));
 
                     if ($this->db->trans_status()) {
@@ -234,7 +234,7 @@ class Data_perkuliahan extends MY_Controller
                     $kd_ruang = $_POST['kd_ruang'];
                     $kd_prodi = $_POST['kd_prodi'];
                     $nama_ruang = $_POST['nama_ruang'];
-                    $mata_kuliah = $_POST['mata_kuliah'];
+                    $mata_kuliah = !empty($_POST['mata_kuliah']) ? json_encode($_POST['mata_kuliah']) : '';
 
                     $this->db->trans_begin();
                     $this->db->where('kd_ruang', $kd_ruang_old);
@@ -242,7 +242,7 @@ class Data_perkuliahan extends MY_Controller
                         'kd_ruang' => $kd_ruang,
                         'kd_prodi' => $kd_prodi,
                         'nama_ruang' => $nama_ruang,
-                        'mata_kuliah' => json_encode($mata_kuliah)
+                        'mata_kuliah' => $mata_kuliah
                     ));
 
                     if ($this->db->trans_status()) {

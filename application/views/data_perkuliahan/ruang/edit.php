@@ -104,17 +104,23 @@
                 $("#mata_kuliah_list").html('');
 
                 if (data.list && data.list.length > 0) {
-                    const checkedValue = JSON.parse('<?= $data->mata_kuliah ?>');
+                    try {
+                        const checkedValue = JSON.parse('<?= $data->mata_kuliah ?>');
 
-                    $.each(data.list, function (i, item) {
-                        const check = $.inArray(item.mata_kuliah, checkedValue);
+                        $.each(data.list, function (i, item) {
+                            const check = $.inArray(item.mata_kuliah, checkedValue);
 
-                        if (check >= 0) {
-                            $("#mata_kuliah_list").append('<input checked type="checkbox" name="mata_kuliah[]" value="' + item.mata_kuliah + '"><span style="color: #0c0c0c">' + item.mata_kuliah + '</span><br>');
-                        } else {
+                            if (check >= 0) {
+                                $("#mata_kuliah_list").append('<input checked type="checkbox" name="mata_kuliah[]" value="' + item.mata_kuliah + '"><span style="color: #0c0c0c">' + item.mata_kuliah + '</span><br>');
+                            } else {
+                                $("#mata_kuliah_list").append('<input type="checkbox" name="mata_kuliah[]" value="' + item.mata_kuliah + '"><span style="color: #0c0c0c">' + item.mata_kuliah + '</span><br>');
+                            }
+                        });
+                    } catch (e) {
+                        $.each(data.list, function (i, item) {
                             $("#mata_kuliah_list").append('<input type="checkbox" name="mata_kuliah[]" value="' + item.mata_kuliah + '"><span style="color: #0c0c0c">' + item.mata_kuliah + '</span><br>');
-                        }
-                    });
+                        });
+                    }
                 }
             },
             error: function (error) {
