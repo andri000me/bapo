@@ -3,11 +3,8 @@
         <h3><?= $title ?></h3>
         <hr>
         <div class="row">
-            <div class="col-md-4">
-                <center>
-                    <h4>Mahasiswa/i</h4>
-                    <a href="data_laporan?state=mahasiswa"><img src="<?= base_url() ?>assets/images/student.png" class="img-responsive" width="100"></a>
-                </center>
+            <div class="col-md-12">
+
             </div>
         </div>
         <div id="laporan_chart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
@@ -21,7 +18,7 @@
                 type: 'areaspline'
             },
             title: {
-                text: 'Jumlah Mahasiswa Tiap Fakultas di Universitas YARSI'
+                text: '<?= $titleChart ?>'
             },
             legend: {
                 layout: 'vertical',
@@ -67,7 +64,7 @@
             },
             series: [{
                 name: 'Universitas YARSI',
-                data: [<?php echo $total_fk ?>, <?php echo $total_fh ?>, <?php echo $total_fe ?>, <?php echo $total_fti ?>, <?php echo $total_fpsi ?>, <?php echo $total_fkg ?>]
+                data: [<?php echo $data['fk'] ?>, <?php echo $data['fh'] ?>, <?php echo $data['fe'] ?>, <?php echo $data['fti'] ?>, <?php echo $data['fpsi'] ?>, <?php echo $data['fkg'] ?>]
             }]
         });
     });
