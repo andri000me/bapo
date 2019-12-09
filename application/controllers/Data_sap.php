@@ -18,8 +18,15 @@ class Data_sap extends MY_Controller
 
     public function index()
     {
-        $this->mPageTitle = 'Data Pengguna';
-        $this->render('data_perkuliahan/index', 'with_breadcrumb');
+        $state_kd_mk = isset($_GET['state_kd_mk']) ? $_GET['state_kd_mk'] : null;
+
+        $this->db->select('*')->from('mata_kuliah');;
+        $this->db->where('kd_mata_kuliah', $state_kd_mk);
+        $query = $this->db->get();
+        $this->mViewData['data'] = $query->row();
+
+        $this->mPageTitle = 'Data SAP Mata Kuliah';
+        $this->render('data_sap/index', 'with_breadcrumb');
     }
 
     public function mahasiswa()
