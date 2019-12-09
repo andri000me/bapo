@@ -27,6 +27,13 @@ class Data_universitas extends MY_Controller
         $crud->display_as('nama_fakultas', 'Nama Fakultas');
         $crud->unset_export();
 
+        if ($_SESSION['status'] !== 'Tata Usaha') {
+            $crud->unset_add();
+            $crud->unset_edit();
+            $crud->unset_read();
+            $crud->unset_delete();
+        }
+
         $this->mPageTitle = 'Data Fakultas';
         $this->render_crud();
     }
@@ -43,6 +50,13 @@ class Data_universitas extends MY_Controller
         $crud->display_as('kd_prodi', 'Kode Program Studi');
         $crud->display_as('nama_prodi', 'Nama Program Studi');
         $crud->unset_export();
+
+        if ($_SESSION['status'] !== 'Tata Usaha') {
+            $crud->unset_add();
+            $crud->unset_edit();
+            $crud->unset_read();
+            $crud->unset_delete();
+        }
 
         $this->mPageTitle = 'Data Program Studi';
         $this->render_crud();

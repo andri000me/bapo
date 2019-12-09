@@ -458,4 +458,149 @@ class Data_perkuliahan extends MY_Controller
         $this->mPageTitle = 'Data Laboratorium';
         $this->render('data_perkuliahan/laboratorium/index', 'with_breadcrumb_logged');
     }
+
+    public function mata_kuliah()
+    {
+        $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
+        $state = isset($_GET['state']) ? $_GET['state'] : null;
+        $id = isset($_GET['id']) ? $_GET['id'] : null;
+        $this->mViewData['state_fakultas'] = $state_fakultas;
+
+        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
+            $this->load->library('rsa');
+
+            // ADD
+            if ($state === 'add') {
+                if ($_POST) {
+                    $kd_ruang = $_POST['kd_ruang'];
+                    $kd_prodi = $_POST['kd_prodi'];
+                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
+                    $nama_lab = $_POST['nama_lab'];
+
+                    $this->db->trans_begin();
+                    $this->db->insert('laboratorium', array(
+                        'kd_ruang' => $kd_ruang,
+                        'kd_prodi' => $kd_prodi,
+                        'nik_dosen_pj' => $nik_dosen_pj,
+                        'nama_lab' => $nama_lab
+                    ));
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    redirect('data_perkuliahan/laboratorium/index');
+                    return;
+                }
+
+                $this->db->select('*');
+                $query = $this->db->get('mst_fakultas');
+                $this->mViewData['list_fakultas'] = $query->result();
+                $this->mViewData['title'] = 'Tambah Mata Kuliah';
+                $this->render('data_perkuliahan/mata_kuliah/add', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'edit' && !empty($id)) { // EDIT
+                if ($_POST) {
+                    $kd_ruang_old = $_POST['kd_ruang_old'];
+                    $kd_ruang = $_POST['kd_ruang'];
+                    $kd_prodi = $_POST['kd_prodi'];
+                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
+                    $nama_lab = $_POST['nama_lab'];
+
+                    $this->db->trans_begin();
+                    $this->db->where('kd_ruang', $kd_ruang_old);
+                    $this->db->update('mata_kuliah', array(
+                        'kd_ruang' => $kd_ruang,
+                        'kd_prodi' => $kd_prodi,
+                        'nik_dosen_pj' => $nik_dosen_pj,
+                        'nama_lab' => $nama_lab
+                    ));
+
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $_SESSION['state_status'] = true;
+                    } else {
+                        $this->db->trans_rollback();
+                        $_SESSION['state_status'] = false;
+                    }
+
+                    // redirect('data_perkuliahan/mahasiswa/index?state_fakultas=' . $kd_fakultas);
+                    redirect('data_perkuliahan/mata_kuliah/index');
+                    return;
+                }
+
+                $this->db->select('a.kd_ruang, c.kd_prodi, d.kd_fakultas, a.nik_dosen_pj, a.nama_lab');
+                $this->db->from('mata_kuliah as a');
+                $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
+                $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
+                $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
+                $this->db->where('kd_ruang', $id);
+                $query = $this->db->get();
+                $this->mViewData['data'] = $query->row();
+
+                $this->db->select('f.*');
+                $query2 = $this->db->get('mst_fakultas as f');
+                $this->mViewData['list_fakultas'] = $query2->result();
+
+                $this->db->select('*');
+                $this->db->where('kd_fakultas', $this->mViewData['data']->kd_fakultas);
+                $query3 = $this->db->get('mst_program_studi');
+                $this->mViewData['list_prodi'] = $query3->result();
+
+                $this->db->select('a.nik, a.nama_dosen');
+                $this->db->from('mst_dosen as a');
+                $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi');
+                $this->db->where('b.kd_fakultas', $this->mViewData['data']->kd_fakultas);
+                $query4 = $this->db->get();
+                $this->mViewData['list_dosen'] = $query4->result();
+
+                // exit(var_dump($query4->result()));
+
+                $this->mViewData['title'] = 'Edit Data Laboratorium';
+                $this->render('data_perkuliahan/mata_kuliah/edit', 'with_breadcrumb_logged');
+                return;
+            } else if ($state === 'delete' && !empty($id)) {
+                $this->db->trans_begin();
+                $this->db->delete('mata_kuliah', array('kd_ruang' => $id));
+
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $_SESSION['state_status_delete'] = true;
+                } else {
+                    $this->db->trans_rollback();
+                    $_SESSION['state_status_delete'] = false;
+                }
+                redirect($this->agent->referrer());
+                return;
+            }
+        }
+
+        // $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nik_dosen_pj, b.nama_dosen, a.nama_lab');
+        // $this->db->from('laboratorium as a');
+        // $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
+        // $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
+        // $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
+        $this->db->select('*');
+        $this->db->from('mata_kuliah');
+        $query = $this->db->get();
+        $this->mViewData['data'] = $query->result();
+
+        $cssFile = [
+            'assets/dist/dataTables/datatables.min.css',
+        ];
+        $this->add_stylesheet($cssFile, true);
+
+        $jsFile = [
+            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
+            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
+        ];
+        $this->add_script($jsFile, TRUE, 'foot');
+
+        $this->mPageTitle = 'Data Mata Kuliah';
+        $this->render('data_perkuliahan/mata_kuliah/index', 'with_breadcrumb_logged');
+    }
 }

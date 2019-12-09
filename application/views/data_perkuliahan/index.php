@@ -21,6 +21,12 @@
                     <a href="data_perkuliahan/laboratorium"><img src="<?= base_url() ?>assets/images/student.png" class="img-responsive" width="100"></a>
                 </center>
             </div>
+            <div class="col-md-4">
+                <center>
+                    <h4>Mata Kuliah</h4>
+                    <a href="data_perkuliahan/mata_kuliah"><img src="<?= base_url() ?>assets/images/student.png" class="img-responsive" width="100"></a>
+                </center>
+            </div>
         </div>
     </div>
 </div>

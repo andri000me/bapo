@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * Data Perkulliahan page
  */
-class Data_perkuliahan extends MY_Controller
+class Data_pelaksanaan_perkuliahan extends MY_Controller
 {
 
     // Constructor

@@ -13,6 +13,11 @@ class Data_pengguna extends MY_Controller
         parent::__construct();
 
         $this->checkRole();
+
+        if ($_SESSION['status'] !== 'Tata Usaha') {
+            redirect(base_url());
+        }
+
         $this->load->library('user_agent');
     }
 

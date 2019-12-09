@@ -55,11 +55,15 @@
                                         Data Universitas
                                     </a>
                                 </li>
-                                <li role="presentation">
-                                    <a class="<?php echo ($ctrler == 'data_pengguna' || $current_uri == 'data_pengguna') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_pengguna'>
-                                        Data Pengguna
-                                    </a>
-                                </li>
+
+                                <?php if ($_SESSION['status'] === 'Tata Usaha') { ?>
+                                    <li role="presentation">
+                                        <a class="<?php echo ($ctrler == 'data_pengguna' || $current_uri == 'data_pengguna') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_pengguna'>
+                                            Data Pengguna
+                                        </a>
+                                    </li>
+                                <?php } ?>
+
                                 <li role="presentation">
                                     <a class="<?php echo ($ctrler == 'data_perkuliahan' || $current_uri == 'data_perkuliahan') == true ? 'active' : '' ?>" href='<?= base_url() ?>data_perkuliahan'>
                                         Data Perkuliahan

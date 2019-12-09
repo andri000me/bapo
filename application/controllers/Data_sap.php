@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Data Perkulliahan page
+ * Data SAP page
  */
-class Data_perkuliahan extends MY_Controller
+class Data_sap extends MY_Controller
 {
 
     // Constructor

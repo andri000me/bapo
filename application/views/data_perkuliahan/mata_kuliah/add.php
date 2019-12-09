@@ -26,11 +26,11 @@
                         <input type="text" class="form-control" name="kd_prodi" id="kd_prodi" placeholder="Kode Program Studi" style="pointer-events:none; background:#F0F0F0;" required/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="kd_ruang" id="kd_ruang" minlength="1" placeholder="Kode Laboratorium" onblur="checkAvailability()" required>
+                        <input type="text" class="form-control" name="kd_ruang" id="kd_ruang" minlength="1" placeholder="Kode Mata Kuliah" onblur="checkAvailability()" required>
                         <span id="user-availability-status"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="nama_lab" id="nama_lab" placeholder="Nama Laboratorium" minlength="1" required>
+                        <input type="text" class="form-control" name="nama_lab" id="nama_lab" placeholder="Nama Mata Kuliah" minlength="1" required>
                     </div>
                     <div class="form-group">
                         <select class="form-control" name="dosen_list" id="dosen_list">

@@ -2,11 +2,13 @@
     <div class="container" style="color:black;">
         <div class="panel panel-default">
 
-            <div align="right">
-                <a href="<?= base_url() ?>data_perkuliahan/laboratorium?state=add&state_fakultas=<?= $state_fakultas ?>">
-                    <img src="<?= base_url() ?>assets/images/add_green.png" width="80px" height="90px" style="margin-right:120px; margin-top:10px;">
-                </a>
-            </div>
+            <?php if ($_SESSION['status'] === 'Tata Usaha') { ?>
+                <div align="right">
+                    <a href="<?= base_url() ?>data_perkuliahan/mata_kuliah?state=add&state_fakultas=<?= $state_fakultas ?>">
+                        <img src="<?= base_url() ?>assets/images/add_green.png" width="80px" height="90px" style="margin-right:120px; margin-top:10px;">
+                    </a>
+                </div>
+            <?php } ?>
 
             <?php
             if (isset($_SESSION['state_status']) && $_SESSION['state_status'] === true) {
@@ -23,37 +25,61 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode Ruang</th>
-                        <th>Prodi</th>
-                        <th>Fakultas</th>
-                        <th>NIK Dosen PJ</th>
-                        <th>Nama Dosen PJ</th>
-                        <th>Nama Lab</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>NIK Dosen</th>
+                        <th>Semester</th>
+                        <th>Tahun Ajaran</th>
+                        <th>SKS</th>
+                        <th>Sifat</th>
+                        <th>SAP</th>
+                        <th>Perkuliahan</th>
+                        <th>Absensi</th>
                         <th>Opsi</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach ($data
-
-                             AS $no => $val) {
-                        ?>
+                    <?php foreach ($data AS $no => $val) { ?>
                         <tr>
                             <td><?= ++$no ?></td>
-                            <td><?= $val->kd_ruang ?></td>
-                            <td><?= $val->nama_prodi ?></td>
-                            <td><?= $val->nama_fakultas ?></td>
-                            <td><?= $val->nik_dosen_pj ?></td>
-                            <td><?= $val->nama_dosen ?></td>
-                            <td><?= $val->nama_lab ?></td>
+                            <td><?= $val->kd_mata_kuliah ?></td>
+                            <td><?= $val->nama_mata_kuliah ?></td>
+                            <td><?= $val->nik ?></td>
+                            <td><?= $val->semester ?></td>
+                            <td><?= $val->tahun_ajaran ?></td>
+                            <td><?= $val->total_sks ?></td>
+                            <td><?= $val->sifat ?></td>
                             <td>
-                                <a href="<?= base_url() ?>data_perkuliahan/laboratorium?state=edit&id=<?= $val->kd_ruang ?>">
-                                    <img src="<?= base_url() ?>assets/images/edit_green.png" style="margin-left:10px;" width="30" height="30">
-                                </a>
+                                <center>
+                                    <a href="<?= base_url() ?>data_sap?state_kd_mk=<?= $val->kd_mata_kuliah ?>">
+                                        <img src="<?= base_url() ?>assets/images/view_green.png" style="margin-left:10px;" width="30" height="30">
+                                    </a>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <a href="<?= base_url() ?>data_sap?state_kd_mk=">
+                                        <img src="<?= base_url() ?>assets/images/view_green.png" style="margin-left:10px;" width="30" height="30">
+                                    </a>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <a href="<?= base_url() ?>data_absensi/mata_kuliah_sap">
+                                        <img src="<?= base_url() ?>assets/images/view_green.png" style="margin-left:10px;" width="30" height="30">
+                                    </a>
+                                </center>
+                            </td>
+                            <td style="width: 92px">
+                                <?php if ($_SESSION['status'] === 'Tata Usaha') { ?>
+                                    <a title="Edit" href="<?= base_url() ?>data_perkuliahan/mata_kuliah?state=edit&id=<?= $val->kd_mata_kuliah ?>">
+                                        <img src="<?= base_url() ?>assets/images/edit_green.png" style="margin-left:10px;" width="30" height="30">
+                                    </a>
 
-                                <a id="delete-row" href="<?= base_url() ?>data_perkuliahan/laboratorium?state=delete&id=<?= $val->kd_ruang ?>" onclick="return deleteConfirmation()">
-                                    <img src="<?= base_url() ?>assets/images/delete_green.png" style="margin-left:10px;" width="30" height="30">
-                                </a>
+                                    <a title="Hapus" id="delete-row" href="<?= base_url() ?>data_perkuliahan/mata_kuliah?state=delete&id=<?= $val->kd_mata_kuliah ?>" onclick="return deleteConfirmation()">
+                                        <img src="<?= base_url() ?>assets/images/delete_green.png" style="margin-left:10px;" width="30" height="30">
+                                    </a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php } ?>
