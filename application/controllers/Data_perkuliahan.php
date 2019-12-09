@@ -472,17 +472,18 @@ class Data_perkuliahan extends MY_Controller
             // ADD
             if ($state === 'add') {
                 if ($_POST) {
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
-
                     $this->db->trans_begin();
-                    $this->db->insert('laboratorium', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
+                    $this->db->insert('mata_kuliah', array(
+                        'kd_mata_kuliah' => $_POST['kd_mata_kuliah'],
+                        'kd_prodi' => $_POST['kd_prodi'],
+                        'nik' => $_POST['nik'],
+                        'nama_mata_kuliah' => $_POST['nama_mata_kuliah'],
+                        'semester' => $_POST['semester'],
+                        'tahun_ajaran' => $_POST['tahun_ajaran'],
+                        'sks_teori' => $_POST['sks_teori'],
+                        'sks_praktikum' => $_POST['sks_praktikum'],
+                        'total_sks' => (int)$_POST['sks_teori'] + (int)$_POST['sks_praktikum'],
+                        'sifat' => $_POST['sifat'],
                     ));
 
                     if ($this->db->trans_status()) {
@@ -493,7 +494,7 @@ class Data_perkuliahan extends MY_Controller
                         $_SESSION['state_status'] = false;
                     }
 
-                    redirect('data_perkuliahan/laboratorium/index');
+                    redirect('data_perkuliahan/mata_kuliah/index');
                     return;
                 }
 
@@ -505,19 +506,21 @@ class Data_perkuliahan extends MY_Controller
                 return;
             } else if ($state === 'edit' && !empty($id)) { // EDIT
                 if ($_POST) {
-                    $kd_ruang_old = $_POST['kd_ruang_old'];
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
+                    $kd_mata_kuliah_old = $_POST['kd_mata_kuliah_old'];
 
                     $this->db->trans_begin();
-                    $this->db->where('kd_ruang', $kd_ruang_old);
+                    $this->db->where('kd_mata_kuliah', $kd_mata_kuliah_old);
                     $this->db->update('mata_kuliah', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
+                        'kd_mata_kuliah' => $_POST['kd_mata_kuliah'],
+                        'kd_prodi' => $_POST['kd_prodi'],
+                        'nik' => $_POST['nik'],
+                        'nama_mata_kuliah' => $_POST['nama_mata_kuliah'],
+                        'semester' => $_POST['semester'],
+                        'tahun_ajaran' => $_POST['tahun_ajaran'],
+                        'sks_teori' => $_POST['sks_teori'],
+                        'sks_praktikum' => $_POST['sks_praktikum'],
+                        'total_sks' => (int)$_POST['sks_teori'] + (int)$_POST['sks_praktikum'],
+                        'sifat' => $_POST['sifat'],
                     ));
 
                     if ($this->db->trans_status()) {
@@ -533,12 +536,12 @@ class Data_perkuliahan extends MY_Controller
                     return;
                 }
 
-                $this->db->select('a.kd_ruang, c.kd_prodi, d.kd_fakultas, a.nik_dosen_pj, a.nama_lab');
+                $this->db->select('a.*, c.kd_prodi, d.kd_fakultas');
                 $this->db->from('mata_kuliah as a');
-                $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
+                $this->db->join('mst_dosen as b', 'a.nik = b.nik', 'left');
                 $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
                 $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-                $this->db->where('kd_ruang', $id);
+                $this->db->where('kd_mata_kuliah', $id);
                 $query = $this->db->get();
                 $this->mViewData['data'] = $query->row();
 
@@ -558,14 +561,17 @@ class Data_perkuliahan extends MY_Controller
                 $query4 = $this->db->get();
                 $this->mViewData['list_dosen'] = $query4->result();
 
-                // exit(var_dump($query4->result()));
+                $this->mViewData['list_sifat'] = [
+                    'Wajib' => 'Wajib',
+                    'Pilihan' => 'Pilihan'
+                ];
 
-                $this->mViewData['title'] = 'Edit Data Laboratorium';
+                $this->mViewData['title'] = 'Edit Data Mata Kuliah';
                 $this->render('data_perkuliahan/mata_kuliah/edit', 'with_breadcrumb_logged');
                 return;
             } else if ($state === 'delete' && !empty($id)) {
                 $this->db->trans_begin();
-                $this->db->delete('mata_kuliah', array('kd_ruang' => $id));
+                $this->db->delete('mata_kuliah', array('kd_mata_kuliah' => $id));
 
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
@@ -579,11 +585,6 @@ class Data_perkuliahan extends MY_Controller
             }
         }
 
-        // $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nik_dosen_pj, b.nama_dosen, a.nama_lab');
-        // $this->db->from('laboratorium as a');
-        // $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
-        // $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-        // $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
         $this->db->select('*');
         $this->db->from('mata_kuliah');
         $query = $this->db->get();

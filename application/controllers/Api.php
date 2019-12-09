@@ -256,4 +256,30 @@ class Api extends MY_Controller
 
         return;
     }
+
+    // Mata Kuliah
+    public function check_availability_kd_mata_kuliah()
+    {
+        $kd_ruang = $_POST['kd_mata_kuliah'];
+
+        $this->db->select('kd_mata_kuliah');
+        $this->db->where('kd_mata_kuliah', $kd_ruang);
+        $query = $this->db->get('mata_kuliah');
+
+        if ($data = $query->row_array()) {
+            echo json_encode([
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'Kode Mata Kuliah Tidak Tersedia'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Kode Mata Kuliah Tersedia'
+            ]);
+        }
+
+        return;
+    }
 }

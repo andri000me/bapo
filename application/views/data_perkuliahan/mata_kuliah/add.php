@@ -7,7 +7,7 @@
 
             <div class="col-md-6 col-md-offset-3">
                 <form method="post" role="form">
-                    <input type="hidden" class="form-control" name="kd_ruang_old" id="kd_ruang_old">
+                    <input type="hidden" class="form-control" name="kd_mata_kuliah_old" id="kd_mata_kuliah_old">
                     <div class="form-group">
                         <select class="form-control" name="nama_fakultas" id="nama_fakultas">
                             <option value="">Pilih Fakultas</option>
@@ -26,11 +26,11 @@
                         <input type="text" class="form-control" name="kd_prodi" id="kd_prodi" placeholder="Kode Program Studi" style="pointer-events:none; background:#F0F0F0;" required/>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="kd_ruang" id="kd_ruang" minlength="1" placeholder="Kode Mata Kuliah" onblur="checkAvailability()" required>
+                        <input type="text" class="form-control" name="kd_mata_kuliah" id="kd_mata_kuliah" minlength="1" placeholder="Kode Mata Kuliah" onblur="checkAvailability()" required>
                         <span id="user-availability-status"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="nama_lab" id="nama_lab" placeholder="Nama Mata Kuliah" minlength="1" required>
+                        <input type="text" class="form-control" name="nama_mata_kuliah" id="nama_mata_kuliah" placeholder="Nama Mata Kuliah" minlength="1" required>
                     </div>
                     <div class="form-group">
                         <select class="form-control" name="dosen_list" id="dosen_list">
@@ -38,7 +38,26 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="nik_dosen_pj" id="nik_dosen_pj" placeholder="Dosen Panunggung Jawab" style="pointer-events:none; background:#F0F0F0;" required/>
+                        <input type="text" class="form-control" name="nik" id="nik" placeholder="Dosen Panunggung Jawab" style="pointer-events:none; background:#F0F0F0;" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="semester" id="semester" placeholder="Semester" minlength="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="tahun_ajaran" id="tahun_ajaran" placeholder="Tahun Ajaran" minlength="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="sks_teori" id="sks_teori" placeholder="SKS Teori" minlength="1" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" name="sks_praktikum" id="sks_praktikum" placeholder="SKS Praktikum" minlength="1" required>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="sifat" id="sifat">
+                            <option value="">Pilih Sifat Mata Kuliah</option>
+                            <option value="Wajib">Wajib</option>
+                            <option value="Pilihan">Pilihan</option>
+                        </select>
                     </div>
                     <div class="text-center">
                         <button onclick="window.history.back()" type="button" name="btn-back" class="btn btn-danger btn-lg">Batal</button>
@@ -53,22 +72,22 @@
 
 <script>
     function checkAvailability() {
-        if ($("#kd_ruang").val() && ($("#kd_ruang").val() != $("#kd_ruang_old").val())) {
+        if ($("#kd_mata_kuliah").val() && ($("#kd_mata_kuliah").val() != $("#kd_mata_kuliah_old").val())) {
             $.ajax({
-                url: "api/check_availability_kd_ruang_lab",
+                url: "api/check_availability_kd_mata_kuliah",
                 data: {
-                    kd_ruang: $("#kd_ruang").val(),
-                    kd_ruang_old: $("#kd_ruang_old").val()
+                    kd_mata_kuliah: $("#kd_mata_kuliah").val(),
+                    kd_mata_kuliah_old: $("#kd_mata_kuliah_old").val()
                 },
                 type: "POST",
                 success: function (res) {
                     const data = JSON.parse(res);
 
                     if (data.status === 'error') {
-                        $("#user-availability-status").html('<span style="color:red; font-weight:bold">&nbsp;&nbsp;Kode Lab Tidak Tersedia</span>');
+                        $("#user-availability-status").html('<span style="color:red; font-weight:bold">&nbsp;&nbsp;Kode Mata Kuliah Tidak Tersedia</span>');
                         $("#btn-simpan").attr('disabled', true);
                     } else {
-                        $("#user-availability-status").html('<span style="color:green; font-weight:bold">&nbsp;&nbsp;Kode Lab Tersedia</span>');
+                        $("#user-availability-status").html('<span style="color:green; font-weight:bold">&nbsp;&nbsp;Kode Mata Kuliah Tersedia</span>');
                         $("#btn-simpan").removeAttr('disabled');
                     }
                 },
@@ -77,7 +96,7 @@
                 }
             });
         } else {
-            if (!$("#kd_ruang").val() || $("#kd_ruang").val() == undefined) {
+            if (!$("#kd_mata_kuliah").val() || $("#kd_mata_kuliah").val() == undefined) {
                 $("#user-availability-status").html('<span style="color:red; font-weight:bold">&nbsp;&nbsp;Kode Harus Diisi</span>');
                 $("#btn-simpan").attr('disabled', true);
             } else {
@@ -118,7 +137,7 @@
     $('#nama_fakultas').on('change', function () {
         const kd_fakultas = this.value;
         $("#kd_prodi").val('');
-        $('#nik_dosen_pj').val('');
+        $('#nik').val('');
 
         getListDosen(kd_fakultas);
 
@@ -157,10 +176,10 @@
 
     $('#dosen_list').on('change', function () {
         if (this.value) {
-            $("#nik_dosen_pj").val(this.value);
+            $("#nik").val(this.value);
             $("#btn-simpan").removeAttr('disabled');
         } else {
-            $("#nik_dosen_pj").val('');
+            $("#nik").val('');
             $("#btn-simpan").attr('disabled', true);
         }
     });
