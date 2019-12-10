@@ -58,14 +58,14 @@
                             </td>
                             <td>
                                 <center>
-                                    <a href="<?= base_url() ?>data_sap?state_kd_mk=">
+                                    <a href="<?= base_url() ?>data_pelaksanaan_perkuliahan?state_kd_mk=<?= $val->kd_mata_kuliah ?>">
                                         <img src="<?= base_url() ?>assets/images/view_green.png" style="margin-left:10px;" width="30" height="30">
                                     </a>
                                 </center>
                             </td>
                             <td>
                                 <center>
-                                    <a href="<?= base_url() ?>data_absensi/mata_kuliah_sap">
+                                    <a href="<?= base_url() ?>data_absensi?state_kd_mk=<?= $val->kd_mata_kuliah ?>">
                                         <img src="<?= base_url() ?>assets/images/view_green.png" style="margin-left:10px;" width="30" height="30">
                                     </a>
                                 </center>
