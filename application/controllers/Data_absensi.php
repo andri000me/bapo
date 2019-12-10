@@ -88,7 +88,7 @@ class Data_absensi extends MY_Controller
         $this->db->select('*')->from('mst_dosen');
         $this->db->where('nik', $nik_koordinator_mata_kuliah);
         $data_dosen = $this->db->get();
-        $this->mViewData['data_ruang'] = $data_dosen->row();
+        $this->mViewData['data_dosen'] = $data_dosen->row();
 
         // Data Rincian Mata Kuliah
         $this->db->select('*')->from('rincian_materi_kuliah');
@@ -189,7 +189,7 @@ class Data_absensi extends MY_Controller
         $this->db->select('*')->from('mst_dosen');
         $this->db->where('nik', $nik_koordinator_mata_kuliah);
         $data_dosen = $this->db->get();
-        $this->mViewData['data_ruang'] = $data_dosen->row();
+        $this->mViewData['data_dosen'] = $data_dosen->row();
 
         // Data Rincian Mata Kuliah
         $this->db->select('*')->from('rincian_materi_kuliah');
