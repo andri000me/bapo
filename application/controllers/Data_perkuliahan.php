@@ -436,6 +436,14 @@ class Data_perkuliahan extends MY_Controller
             }
         }
 
+        if ($_SESSION['status'] == 'Dosen') {
+            $this->db->where('b.nik', $_SESSION['nik']);
+        }
+
+        if ($_SESSION['status'] == 'Mahasiswa') {
+            $this->db->where('c.kd_prodi', $_SESSION['kd_prodi']);
+        }
+
         $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nik_dosen_pj, b.nama_dosen, a.nama_lab');
         $this->db->from('laboratorium as a');
         $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
@@ -587,6 +595,15 @@ class Data_perkuliahan extends MY_Controller
 
         $this->db->select('*');
         $this->db->from('mata_kuliah');
+
+        if ($_SESSION['status'] == 'Dosen') {
+            $this->db->where('nik', $_SESSION['nik']);
+        }
+
+        if ($_SESSION['status'] == 'Mahasiswa') {
+            $this->db->where('kd_prodi', $_SESSION['kd_prodi']);
+        }
+
         $query = $this->db->get();
         $this->mViewData['data'] = $query->result();
 

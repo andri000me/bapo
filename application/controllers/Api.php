@@ -41,9 +41,10 @@ class Api extends MY_Controller
                     $kd_prodi = !empty($dosen->kd_prodi) ? $dosen->kd_prodi : null;
                     $jabatan = !empty($dosen->jabatan) ? $dosen->jabatan : null;
                 } else if (strtolower($data['status']) == 'mahasiswa') {
-                    $dosen = $this->db->select('*')->where('npm', $data['kd_user'])->get('mst_mahasiswa')->row();
-                    $npm = !empty($dosen->npm) ? $dosen->npm : null;
-                    $nama = !empty($dosen->nama_mahasiswa) ? $dosen->nama_mahasiswa : null;
+                    $mhs = $this->db->select('*')->where('npm', $data['kd_user'])->get('mst_mahasiswa')->row();
+                    $npm = !empty($mhs->npm) ? $mhs->npm : null;
+                    $nama = !empty($mhs->nama_mahasiswa) ? $mhs->nama_mahasiswa : null;
+                    $kd_prodi = !empty($mhs->kd_prodi) ? $mhs->kd_prodi : null;
                 }
 
                 $_SESSION['is_logged'] = true;
