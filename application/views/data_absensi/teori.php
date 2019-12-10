@@ -281,7 +281,7 @@
                             <th><h4><b>Ruang</b></h4></th>
                             <th><h4><b>&nbsp;:&nbsp;</b></h4></th>
                             <th><h5><b>
-                                        <input type="text" value="<?php echo $data_ruang_prodi->nama_ruang; ?>" placeholder="Ruang" readonly disabled/>
+                                        <input type="text" value="<?php echo isset($data_ruang_prodi->nama_ruang) ? $data_ruang_prodi->nama_ruang : ''; ?>" placeholder="Ruang" readonly disabled/>
                                     </b></h5></th>
                         </tr>
                     </table>
