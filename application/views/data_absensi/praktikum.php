@@ -44,7 +44,7 @@
             $bobot_praktikum_dan_keaktifan = isset($data_sap->bobot_praktikum_dan_keaktifan) ? $data_sap->bobot_praktikum_dan_keaktifan : '';
             $rujukan = isset($data_sap->rujukan) ? $data_sap->rujukan : '';
 
-            $id_pelaksanaan_perkuliahan = $kd_mata_kuliah . "-" . $semester . "-TEORI-1";
+            $id_pelaksanaan_perkuliahan = $kd_mata_kuliah . "-" . $semester . "-PRAKTIKUM-1";
             $nama_prodi = isset($data_prodi->nama_prodi) ? $data_prodi->nama_prodi : '';
             $kd_ruang = isset($data_perkuliahan->kd_ruang) ? $data_perkuliahan->kd_ruang : '';
             $nik_tata_usaha = isset($data_perkuliahan->nik_tata_usaha) ? $data_perkuliahan->nik_tata_usaha : '';
@@ -53,7 +53,7 @@
 
             $total = isset($data_total_krs->total) ? $data_total_krs->total : 0;
 
-            $id_absensi = $kd_mata_kuliah . "-" . $semester . "-TEORI-1";;
+            $id_absensi = $kd_mata_kuliah . "-" . $semester . "-PRAKTIKUM-1";;
 
             $npm = $data_absensi->npm;
             $w1 = $data_absensi->w1;
@@ -840,7 +840,7 @@
                         ?>
                     </table>
                     <div class="text-center" class="print-screen">
-                        <button value="dosen_data_absensi_teori" type="submit" name="submit" class="btn btn-primary btn-lg print-screen" required="required">Simpan</button>
+                        <button value="dosen_data_absensi_praktikum" type="submit" name="submit" class="btn btn-primary btn-lg print-screen" required="required">Simpan</button>
                     </div>
                     </br>
                 </form>

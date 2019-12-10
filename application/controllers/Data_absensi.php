@@ -126,11 +126,12 @@ class Data_absensi extends MY_Controller
         $state_kd_mk = isset($_GET['state_kd_mk']) ? $_GET['state_kd_mk'] : null;
 
         if ($_POST) {
-            if ($_POST['submit'] == 'dosen_data_absensi_teori') {
-                $this->Data_absensi_model->teori($_POST);
-            } else if ($_POST['submit'] == 'dosen_data_absensi_praktikum') {
-                $this->Data_absensi_model->praktikum($_POST);
-            }
+            $this->Data_absensi_model->praktikum($_POST);
+            // if ($_POST['submit'] == 'dosen_data_absensi_teori') {
+            //     $this->Data_absensi_model->teori($_POST);
+            // } else if ($_POST['submit'] == 'dosen_data_absensi_praktikum') {
+            //     $this->Data_absensi_model->praktikum($_POST);
+            // }
         }
 
         // Data Mata Kuliah
@@ -173,7 +174,8 @@ class Data_absensi extends MY_Controller
         $this->db->select('*')->from('absensi');;
         $this->db->where('id_absensi', $id_absensi);
         $data_absensi = $this->db->get();
-        $this->mViewData['data_absensi'] = $data_absensi->row();
+        $data_absensi = $data_absensi->row();
+        $this->mViewData['data_absensi'] = $data_absensi;
 
         // Data Ruang
         $this->db->select('*')->from('ruang');;

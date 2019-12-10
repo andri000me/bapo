@@ -393,7 +393,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $npm = "";
-        for ($i = 0; $i < $total_npm; $i++) {
+        for( $i = 0; $i < $total_npm; $i++ ) {
             if ($npm == "") {
                 $npm = $npm_[$i] . ", ";
             } else {
@@ -407,7 +407,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w1 = "";
-        for ($i = 0; $i < $total_w1; $i++) {
+        for( $i = 0; $i < $total_w1; $i++ ) {
             if ($w1 == "") {
                 $w1 = $w1_[$i] . ", ";
                 $total_hadir++;
@@ -423,7 +423,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w2 = "";
-        for ($i = 0; $i < $total_w2; $i++) {
+        for( $i = 0; $i < $total_w2; $i++ ) {
             if ($w2 == "") {
                 $w2 = $w2_[$i] . ", ";
                 $total_hadir++;
@@ -439,7 +439,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w3 = "";
-        for ($i = 0; $i < $total_w3; $i++) {
+        for( $i = 0; $i < $total_w3; $i++ ) {
             if ($w3 == "") {
                 $w3 = $w3_[$i] . ", ";
                 $total_hadir++;
@@ -455,7 +455,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w4 = "";
-        for ($i = 0; $i < $total_w4; $i++) {
+        for( $i = 0; $i < $total_w4; $i++ ) {
             if ($w4 == "") {
                 $w4 = $w4_[$i] . ", ";
                 $total_hadir++;
@@ -471,7 +471,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w5 = "";
-        for ($i = 0; $i < $total_w5; $i++) {
+        for( $i = 0; $i < $total_w5; $i++ ) {
             if ($w5 == "") {
                 $w5 = $w5_[$i] . ", ";
                 $total_hadir++;
@@ -487,7 +487,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w6 = "";
-        for ($i = 0; $i < $total_w6; $i++) {
+        for( $i = 0; $i < $total_w6; $i++ ) {
             if ($w6 == "") {
                 $w6 = $w6_[$i] . ", ";
                 $total_hadir++;
@@ -503,7 +503,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w7 = "";
-        for ($i = 0; $i < $total_w7; $i++) {
+        for( $i = 0; $i < $total_w7; $i++ ) {
             if ($w7 == "") {
                 $w7 = $w7_[$i] . ", ";
                 $total_hadir++;
@@ -519,7 +519,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w8 = "";
-        for ($i = 0; $i < $total_w8; $i++) {
+        for( $i = 0; $i < $total_w8; $i++ ) {
             if ($w8 == "") {
                 $w8 = $w8_[$i] . ", ";
                 $total_hadir++;
@@ -535,7 +535,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w9 = "";
-        for ($i = 0; $i < $total_w9; $i++) {
+        for( $i = 0; $i < $total_w9; $i++ ) {
             if ($w9 == "") {
                 $w9 = $w9_[$i] . ", ";
                 $total_hadir++;
@@ -551,7 +551,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w10 = "";
-        for ($i = 0; $i < $total_w10; $i++) {
+        for( $i = 0; $i < $total_w10; $i++ ) {
             if ($w10 == "") {
                 $w10 = $w10_[$i] . ", ";
                 $total_hadir++;
@@ -567,7 +567,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w11 = "";
-        for ($i = 0; $i < $total_w11; $i++) {
+        for( $i = 0; $i < $total_w11; $i++ ) {
             if ($w11 == "") {
                 $w11 = $w11_[$i] . ", ";
                 $total_hadir++;
@@ -583,7 +583,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w12 = "";
-        for ($i = 0; $i < $total_w12; $i++) {
+        for( $i = 0; $i < $total_w12; $i++ ) {
             if ($w12 == "") {
                 $w12 = $w12_[$i] . ", ";
                 $total_hadir++;
@@ -599,7 +599,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w13 = "";
-        for ($i = 0; $i < $total_w13; $i++) {
+        for( $i = 0; $i < $total_w13; $i++ ) {
             if ($w13 == "") {
                 $w13 = $w13_[$i] . ", ";
                 $total_hadir++;
@@ -615,7 +615,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w14 = "";
-        for ($i = 0; $i < $total_w14; $i++) {
+        for( $i = 0; $i < $total_w14; $i++ ) {
             if ($w14 == "") {
                 $w14 = $w14_[$i] . ", ";
                 $total_hadir++;
@@ -631,7 +631,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w15 = "";
-        for ($i = 0; $i < $total_w15; $i++) {
+        for( $i = 0; $i < $total_w15; $i++ ) {
             if ($w15 == "") {
                 $w15 = $w15_[$i] . ", ";
                 $total_hadir++;
@@ -647,7 +647,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $w16 = "";
-        for ($i = 0; $i < $total_w16; $i++) {
+        for( $i = 0; $i < $total_w16; $i++ ) {
             if ($w16 == "") {
                 $w16 = $w16_[$i] . ", ";
                 $total_hadir++;
@@ -663,7 +663,7 @@ class Data_absensi_model extends MY_Model
         }
 
         $week = 0;
-        for ($i = 0; $i < $total_week; $i++) {
+        for( $i = 0; $i < $total_week; $i++ ) {
             if ($week == 0) {
                 $week = $week_[$i];
             } else if ($week < $week_[$i]) {
@@ -709,8 +709,8 @@ class Data_absensi_model extends MY_Model
             $_SESSION['state_status'] = false;
         }
 
-        redirect('data_perkuliahan/mata_kuliah/index');
-        // refresh();
+        // redirect('data_perkuliahan/mata_kuliah/index');
+        refresh();
         return;
     }
 
