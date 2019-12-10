@@ -22,70 +22,8 @@ class Data_sap extends MY_Controller
         $state_kd_mk = isset($_GET['state_kd_mk']) ? $_GET['state_kd_mk'] : null;
 
         if ($_POST) {
-
             if ($_POST['submit'] == 'dosen_data_sap') {
-                $kd_mata_kuliah = $_POST['kd_mata_kuliah'];
-                $nik_koordinator_mata_kuliah = $_POST['nik_koordinator_mata_kuliah'];
-                $silabus_ringkas = $_POST['silabus_ringkas'];
-                $tiu = $_POST['tiu'];
-                $mk_prasyarat = $_POST['mk_prasyarat'];
-                $media1 = $_POST['media1'];
-                $media2 = $_POST['media2'];
-                $media3 = $_POST['media3'];
-                $media = $media1 . ", " . $media2 . ", " . $media3;
-                $waktu_kuliah = $_POST['waktu_kuliah'];
-                $waktu_pr = $_POST['waktu_pr'];
-                $waktu_diskusi_kelompok = $_POST['waktu_diskusi_kelompok'];
-                $lain_lain1 = $_POST['lain_lain1'];
-                $waktu_lain_lain1 = $_POST['waktu_lain_lain1'];
-                $bobot_UTS = $_POST['bobot_UTS'];
-                $bobot_UAS = $_POST['bobot_UAS'];
-                $bobot_quiz = $_POST['bobot_quiz'];
-                $bobot_tugas = $_POST['bobot_tugas'];
-                $bobot_praktikum = $_POST['bobot_praktikum'];
-                $bobot_keaktifan = $_POST['bobot_keaktifan'];
-                $lain_lain2 = $_POST['lain_lain2'];
-                $bobot_lain_lain2 = $_POST['bobot_lain_lain2'];
-                $rujukan = $_POST['rujukan'];
-
-                // Perform an SQL query
-
-                $sql = "INSERT INTO sap(kd_mata_kuliah, nik_koordinator_mata_kuliah, silabus_ringkas, tiu, mk_prasyarat, media, waktu_kuliah, waktu_pr, waktu_diskusi_kelompok, lain_lain1, waktu_lain_lain1, bobot_UTS, bobot_UAS, bobot_quiz, bobot_tugas, bobot_praktikum, bobot_keaktifan, lain_lain2, bobot_lain_lain2, rujukan)
-			values('$kd_mata_kuliah', '$nik_koordinator_mata_kuliah', '$silabus_ringkas', '$tiu', '$mk_prasyarat', '$media', '$waktu_kuliah', '$waktu_pr', '$waktu_diskusi_kelompok', '$lain_lain1', '$waktu_lain_lain1', '$bobot_UTS', '$bobot_UAS', '$bobot_quiz', '$bobot_tugas', '$bobot_praktikum', '$bobot_keaktifan', '$lain_lain2', '$bobot_lain_lain2', '$rujukan')
-			ON DUPLICATE KEY UPDATE 
-			nik_koordinator_mata_kuliah = '$nik_koordinator_mata_kuliah',
-			silabus_ringkas = '$silabus_ringkas',
-			tiu = '$tiu',
-			mk_prasyarat = '$mk_prasyarat',
-			media = '$media',
-			waktu_kuliah = '$waktu_kuliah',
-			waktu_pr = '$waktu_pr',
-			waktu_diskusi_kelompok = '$waktu_diskusi_kelompok',
-			lain_lain1 = '$lain_lain1',
-			waktu_lain_lain1 = '$waktu_lain_lain1',
-			bobot_UTS = '$bobot_UTS',
-			bobot_UAS = '$bobot_UAS',
-			bobot_quiz = '$bobot_quiz',
-			bobot_tugas = '$bobot_tugas',
-			bobot_praktikum = '$bobot_praktikum',
-			bobot_keaktifan = '$bobot_keaktifan',
-			lain_lain2 = '$lain_lain2',
-			bobot_lain_lain2 = '$bobot_lain_lain2',
-			rujukan = '$rujukan'";
-
-                $this->db->trans_begin();
-                $this->db->query($sql);
-
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $_SESSION['state_status'] = true;
-                } else {
-                    $this->db->trans_rollback();
-                    $_SESSION['state_status'] = false;
-                }
-
-                redirect('data_perkuliahan/mata_kuliah/index');
-                return;
+                $this->Data_sap_model->dosenDataSap($_POST);
             } else if ($_POST['submit'] == 'dosen_data_rincian_materi_kuliah') {
                 $this->Data_sap_model->rincianMateriKuliah_($_POST);
             }
