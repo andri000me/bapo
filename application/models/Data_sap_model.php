@@ -70,8 +70,8 @@ class Data_sap_model extends MY_Model
         return;
     }
 
-    // dosen_data_rincian_materi_kuliah_
-    public function rincianMateriKuliah_($data)
+    // dosen_data_rincian_materi_kuliah
+    public function rincianMateriKuliah($data)
     {
         $_POST = $data;
         $kd_mata_kuliah = $_POST['kd_mata_kuliah'];

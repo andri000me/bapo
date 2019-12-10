@@ -30,10 +30,10 @@ class Data_absensi extends MY_Controller
         $state_kd_mk = isset($_GET['state_kd_mk']) ? $_GET['state_kd_mk'] : null;
 
         if ($_POST) {
-            if ($_POST['submit'] == 'dosen_data_sap') {
-                $this->Data_sap_model->dosenDataSap($_POST);
-            } else if ($_POST['submit'] == 'dosen_data_rincian_materi_kuliah') {
-                $this->Data_sap_model->rincianMateriKuliah_($_POST);
+            if ($_POST['submit'] == 'dosen_data_absensi_teori') {
+                $this->Data_absensi_model->teori($_POST);
+            } else if ($_POST['submit'] == 'dosen_data_absensi_praktikum') {
+                $this->Data_absensi_model->praktikum($_POST);
             }
         }
 

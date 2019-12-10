@@ -25,7 +25,7 @@ class Data_sap extends MY_Controller
             if ($_POST['submit'] == 'dosen_data_sap') {
                 $this->Data_sap_model->dosenDataSap($_POST);
             } else if ($_POST['submit'] == 'dosen_data_rincian_materi_kuliah') {
-                $this->Data_sap_model->rincianMateriKuliah_($_POST);
+                $this->Data_sap_model->rincianMateriKuliah($_POST);
             }
         }
 
