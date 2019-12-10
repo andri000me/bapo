@@ -58,6 +58,7 @@ $config['ci_bootstrap'] = array(
             'assets/dist/frontend/css/animate.css',
             'assets/dist/frontend/css/prettyPhoto.css',
             'assets/dist/frontend/css/style.css',
+            'assets/dist/frontend/css/print.css',
         )
     ),
 

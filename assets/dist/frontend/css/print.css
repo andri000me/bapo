@@ -1,0 +1,25 @@
+@media print {
+    .print-screen {
+        display: none;
+    }
+
+    html, body, input, select, option, textarea, table, tr, td, th {
+        font-size: 6pt;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 9pt;
+    }
+
+    @page {
+        size: portrait;
+    }
+}
+
+@page {
+    size: portrait;
+    margin-left: -3cm;
+    margin-right: -3cm;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+}

@@ -14,600 +14,128 @@ class Data_sap extends MY_Controller
 
         $this->checkRole();
         $this->load->library('user_agent');
+        $this->load->model('Data_sap_model');
     }
 
     public function index()
     {
         $state_kd_mk = isset($_GET['state_kd_mk']) ? $_GET['state_kd_mk'] : null;
 
+        if ($_POST) {
+
+            if ($_POST['submit'] == 'dosen_data_sap') {
+                $kd_mata_kuliah = $_POST['kd_mata_kuliah'];
+                $nik_koordinator_mata_kuliah = $_POST['nik_koordinator_mata_kuliah'];
+                $silabus_ringkas = $_POST['silabus_ringkas'];
+                $tiu = $_POST['tiu'];
+                $mk_prasyarat = $_POST['mk_prasyarat'];
+                $media1 = $_POST['media1'];
+                $media2 = $_POST['media2'];
+                $media3 = $_POST['media3'];
+                $media = $media1 . ", " . $media2 . ", " . $media3;
+                $waktu_kuliah = $_POST['waktu_kuliah'];
+                $waktu_pr = $_POST['waktu_pr'];
+                $waktu_diskusi_kelompok = $_POST['waktu_diskusi_kelompok'];
+                $lain_lain1 = $_POST['lain_lain1'];
+                $waktu_lain_lain1 = $_POST['waktu_lain_lain1'];
+                $bobot_UTS = $_POST['bobot_UTS'];
+                $bobot_UAS = $_POST['bobot_UAS'];
+                $bobot_quiz = $_POST['bobot_quiz'];
+                $bobot_tugas = $_POST['bobot_tugas'];
+                $bobot_praktikum = $_POST['bobot_praktikum'];
+                $bobot_keaktifan = $_POST['bobot_keaktifan'];
+                $lain_lain2 = $_POST['lain_lain2'];
+                $bobot_lain_lain2 = $_POST['bobot_lain_lain2'];
+                $rujukan = $_POST['rujukan'];
+
+                // Perform an SQL query
+
+                $sql = "INSERT INTO sap(kd_mata_kuliah, nik_koordinator_mata_kuliah, silabus_ringkas, tiu, mk_prasyarat, media, waktu_kuliah, waktu_pr, waktu_diskusi_kelompok, lain_lain1, waktu_lain_lain1, bobot_UTS, bobot_UAS, bobot_quiz, bobot_tugas, bobot_praktikum, bobot_keaktifan, lain_lain2, bobot_lain_lain2, rujukan)
+			values('$kd_mata_kuliah', '$nik_koordinator_mata_kuliah', '$silabus_ringkas', '$tiu', '$mk_prasyarat', '$media', '$waktu_kuliah', '$waktu_pr', '$waktu_diskusi_kelompok', '$lain_lain1', '$waktu_lain_lain1', '$bobot_UTS', '$bobot_UAS', '$bobot_quiz', '$bobot_tugas', '$bobot_praktikum', '$bobot_keaktifan', '$lain_lain2', '$bobot_lain_lain2', '$rujukan')
+			ON DUPLICATE KEY UPDATE 
+			nik_koordinator_mata_kuliah = '$nik_koordinator_mata_kuliah',
+			silabus_ringkas = '$silabus_ringkas',
+			tiu = '$tiu',
+			mk_prasyarat = '$mk_prasyarat',
+			media = '$media',
+			waktu_kuliah = '$waktu_kuliah',
+			waktu_pr = '$waktu_pr',
+			waktu_diskusi_kelompok = '$waktu_diskusi_kelompok',
+			lain_lain1 = '$lain_lain1',
+			waktu_lain_lain1 = '$waktu_lain_lain1',
+			bobot_UTS = '$bobot_UTS',
+			bobot_UAS = '$bobot_UAS',
+			bobot_quiz = '$bobot_quiz',
+			bobot_tugas = '$bobot_tugas',
+			bobot_praktikum = '$bobot_praktikum',
+			bobot_keaktifan = '$bobot_keaktifan',
+			lain_lain2 = '$lain_lain2',
+			bobot_lain_lain2 = '$bobot_lain_lain2',
+			rujukan = '$rujukan'";
+
+                $this->db->trans_begin();
+                $this->db->query($sql);
+
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $_SESSION['state_status'] = true;
+                } else {
+                    $this->db->trans_rollback();
+                    $_SESSION['state_status'] = false;
+                }
+
+                redirect('data_perkuliahan/mata_kuliah/index');
+                return;
+            } else if ($_POST['submit'] == 'dosen_data_rincian_materi_kuliah') {
+                $this->Data_sap_model->rincianMateriKuliah_($_POST);
+            }
+        }
+
+        // Data Mata Kuliah
         $this->db->select('*')->from('mata_kuliah');;
         $this->db->where('kd_mata_kuliah', $state_kd_mk);
-        $query = $this->db->get();
-        $this->mViewData['data'] = $query->row();
+        $mk = $this->db->get();
+        $this->mViewData['data_mk'] = $mk->row();
+        $nama_mk = $mk->row()->nama_mata_kuliah;
+
+        // Data SAP
+        $this->db->select('*')->from('sap');;
+        $this->db->where('kd_mata_kuliah', $state_kd_mk);
+        $sap = $this->db->get();
+        $this->mViewData['data_sap'] = $sap->row();
+
+        // Data Prasyarat Mata Kuliah
+        $this->db->select('*')->from('mata_kuliah');;
+        $this->db->where('kd_prodi', $_SESSION['kd_prodi']);
+        $this->db->where('nama_mata_kuliah', $nama_mk);
+        $praMk = $this->db->get();
+        $this->mViewData['data_pra_mk'] = $praMk->result();
+
+        // Data Rincian Mata Kuliah
+        $this->db->select('*')->from('rincian_materi_kuliah');;
+        $this->db->where('kd_mata_kuliah', $state_kd_mk);
+        $rincian_mk = $this->db->get();
+        $this->mViewData['data_rincian_mk'] = $rincian_mk->result_array();
+
+        // Data Dosen
+        $this->db->select('*')->from('mst_dosen');;
+        $this->db->where('nik', $_SESSION['nik']);
+        $dosen = $this->db->get();
+        $this->mViewData['data_dosen'] = $dosen->row();
+
+        // Data Dosen Jabatan
+        $this->db->select('*')->from('mst_dosen');;
+        $this->db->where('jabatan', 'KPS');
+        $dosenJabatan = $this->db->get();
+        $this->mViewData['data_dosen_jabatan'] = $dosenJabatan->row();
 
         $this->mPageTitle = 'Data SAP Mata Kuliah';
+        $cssFile = [
+            'assets/dist/frontend/css/sap.css',
+            'assets/dist/frontend/css/style.css'
+        ];
+        $this->add_stylesheet($cssFile, true);
         $this->render('data_sap/index', 'with_breadcrumb');
     }
 
-    public function mahasiswa()
-    {
-        $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
-        $state = isset($_GET['state']) ? $_GET['state'] : null;
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $this->mViewData['state_fakultas'] = $state_fakultas;
-
-        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
-            $this->load->library('rsa');
-
-            // ADD
-            if ($state === 'add') {
-                if ($_POST) {
-                    $npm = $_POST['npm'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $kd_fakultas = $_POST['nama_fakultas'];
-                    $nama_mahasiswa = $_POST['nama_mahasiswa'];
-                    $username = $_POST['username'];
-                    $password = $this->rsa->encrypt($_POST['password']);
-
-                    $this->db->trans_begin();
-                    $this->db->insert('mst_mahasiswa', array(
-                        'npm' => $npm,
-                        'kd_prodi' => $kd_prodi,
-                        'nama_mahasiswa' => $nama_mahasiswa
-                    ));
-
-                    $this->db->insert('user_akses', array(
-                        'kd_user' => $npm,
-                        'username' => $username,
-                        'password' => $password,
-                        'status' => 'Mahasiswa'
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    redirect('data_perkuliahan/mahasiswa/index');
-                    return;
-                }
-
-                $this->db->select('*');
-                $query = $this->db->get('mst_fakultas');
-                $this->mViewData['list_fakultas'] = $query->result();
-                $this->mViewData['title'] = 'Tambah Data Mahasiswa';
-                $this->render('data_perkuliahan/mahasiswa/add', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'edit' && !empty($id)) { // EDIT
-                if ($_POST) {
-                    $npm = $_POST['npm'];
-                    $npm_old = $_POST['npm_old'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $kd_fakultas = $_POST['nama_fakultas'];
-                    $nama_mahasiswa = $_POST['nama_mahasiswa'];
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-
-                    $this->db->trans_begin();
-                    $this->db->where('npm', $npm_old);
-                    $this->db->update('mst_mahasiswa', array(
-                        'npm' => $npm,
-                        'kd_prodi' => $kd_prodi,
-                        'nama_mahasiswa' => $nama_mahasiswa
-                    ));
-
-                    if (!empty($_POST['password'])) {
-                        $dataUserAkses = array(
-                            'kd_user' => $npm,
-                            'username' => $username,
-                            'password' => $this->rsa->encrypt($password),
-                            'status' => 'Mahasiswa'
-                        );
-                    } else {
-                        $dataUserAkses = array(
-                            'kd_user' => $npm,
-                            'username' => $username,
-                            'status' => 'Mahasiswa'
-                        );
-                    }
-
-                    $this->db->where('kd_user', $npm_old);
-                    $this->db->update('user_akses', $dataUserAkses);
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    // redirect('data_perkuliahan/mahasiswa/index?state_fakultas=' . $kd_fakultas);
-                    redirect('data_perkuliahan/mahasiswa/index');
-                    return;
-                }
-
-                $this->db->select('f.*');
-                $query2 = $this->db->get('mst_fakultas as f');
-                $this->mViewData['list_fakultas'] = $query2->result();
-
-                $this->db->select('*');
-                $query2 = $this->db->get('mst_program_studi');
-                $this->mViewData['list_prodi'] = $query2->result();
-
-                $this->db->select('b.kd_user AS npm, c.kd_prodi, d.kd_fakultas, a.nama_mahasiswa, b.username');
-                $this->db->from('mst_mahasiswa as a');
-                $this->db->join('user_akses as b', 'a.npm = b.kd_user');
-                $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-                $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-                $this->db->where('b.kd_user', $id);
-                $query = $this->db->get();
-                $this->mViewData['data'] = $query->row();
-
-                $this->mViewData['title'] = 'Edit Data Mahasiswa';
-                $this->render('data_perkuliahan/mahasiswa/edit', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'delete' && !empty($id)) {
-                $this->db->trans_begin();
-                $this->db->delete('mst_mahasiswa', array('npm' => $id));
-                $this->db->delete('user_akses', array('kd_user' => $id));
-
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $_SESSION['state_status_delete'] = true;
-                } else {
-                    $this->db->trans_rollback();
-                    $_SESSION['state_status_delete'] = false;
-                }
-                redirect($this->agent->referrer());
-                return;
-            }
-        }
-
-        $this->db->select('b.kd_user, c.nama_prodi, d.nama_fakultas, a.nama_mahasiswa, b.username');
-        $this->db->from('mst_mahasiswa as a');
-        $this->db->join('user_akses as b', 'a.npm = b.kd_user');
-        $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-        $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-        // $this->db->where('c.kd_fakultas', $state_fakultas);
-        $query = $this->db->get();
-        $this->mViewData['data'] = $query->result();
-
-        $cssFile = [
-            'assets/dist/dataTables/datatables.min.css',
-        ];
-        $this->add_stylesheet($cssFile, true);
-
-        $jsFile = [
-            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
-            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-        ];
-        $this->add_script($jsFile, TRUE, 'foot');
-
-        $this->mPageTitle = 'Data Mahasiswa';
-        $this->render('data_perkuliahan/mahasiswa/index', 'with_breadcrumb_logged');
-    }
-
-    public function ruang()
-    {
-        $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
-        $state = isset($_GET['state']) ? $_GET['state'] : null;
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $this->mViewData['state_fakultas'] = $state_fakultas;
-
-        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
-            $this->load->library('rsa');
-
-            // ADD
-            if ($state === 'add') {
-                if ($_POST) {
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nama_ruang = $_POST['nama_ruang'];
-                    $mata_kuliah = !empty($_POST['mata_kuliah']) ? json_encode($_POST['mata_kuliah']) : '';
-
-                    $this->db->trans_begin();
-                    $this->db->insert('ruang', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nama_ruang' => $nama_ruang,
-                        'mata_kuliah' => $mata_kuliah
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    redirect('data_perkuliahan/ruang/index');
-                    return;
-                }
-
-                $this->db->select('*');
-                $query = $this->db->get('mst_fakultas');
-                $this->mViewData['list_fakultas'] = $query->result();
-                $this->mViewData['title'] = 'Tambah Data Ruang Kelas';
-                $this->render('data_perkuliahan/ruang/add', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'edit' && !empty($id)) { // EDIT
-                if ($_POST) {
-                    $kd_ruang_old = $_POST['kd_ruang_old'];
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nama_ruang = $_POST['nama_ruang'];
-                    $mata_kuliah = !empty($_POST['mata_kuliah']) ? json_encode($_POST['mata_kuliah']) : '';
-
-                    $this->db->trans_begin();
-                    $this->db->where('kd_ruang', $kd_ruang_old);
-                    $this->db->update('ruang', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nama_ruang' => $nama_ruang,
-                        'mata_kuliah' => $mata_kuliah
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    // redirect('data_perkuliahan/mahasiswa/index?state_fakultas=' . $kd_fakultas);
-                    redirect('data_perkuliahan/ruang/index');
-                    return;
-                }
-
-                $this->db->select('a.kd_ruang, b.kd_prodi, c.kd_fakultas, a.nama_ruang, a.mata_kuliah');
-                $this->db->from('ruang as a');
-                $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi', 'left');
-                $this->db->join('mst_fakultas as c', 'b.kd_fakultas = c.kd_fakultas', 'left');
-                $this->db->where('a.kd_ruang', $id);
-                $query = $this->db->get();
-                $this->mViewData['data'] = $query->row();
-
-                $this->db->select('f.*');
-                $query2 = $this->db->get('mst_fakultas as f');
-                $this->mViewData['list_fakultas'] = $query2->result();
-
-                $this->db->select('*');
-                $this->db->where('kd_fakultas', $this->mViewData['data']->kd_fakultas);
-                $query2 = $this->db->get('mst_program_studi');
-                $this->mViewData['list_prodi'] = $query2->result();
-
-                $this->mViewData['title'] = 'Edit Data Ruang Kelas';
-                $this->render('data_perkuliahan/ruang/edit', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'delete' && !empty($id)) {
-                $this->db->trans_begin();
-                $this->db->delete('ruang', array('kd_ruang' => $id));
-
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $_SESSION['state_status_delete'] = true;
-                } else {
-                    $this->db->trans_rollback();
-                    $_SESSION['state_status_delete'] = false;
-                }
-                redirect($this->agent->referrer());
-                return;
-            }
-        }
-
-        $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nama_ruang, a.mata_kuliah');
-        $this->db->from('ruang as a');
-        $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-        $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-        $query = $this->db->get();
-        $this->mViewData['data'] = $query->result();
-
-        $cssFile = [
-            'assets/dist/dataTables/datatables.min.css',
-        ];
-        $this->add_stylesheet($cssFile, true);
-
-        $jsFile = [
-            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
-            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-        ];
-        $this->add_script($jsFile, TRUE, 'foot');
-
-        $this->mPageTitle = 'Data Mahasiswa';
-        $this->render('data_perkuliahan/ruang/index', 'with_breadcrumb_logged');
-    }
-
-    public function laboratorium()
-    {
-        $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
-        $state = isset($_GET['state']) ? $_GET['state'] : null;
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $this->mViewData['state_fakultas'] = $state_fakultas;
-
-        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
-            $this->load->library('rsa');
-
-            // ADD
-            if ($state === 'add') {
-                if ($_POST) {
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
-
-                    $this->db->trans_begin();
-                    $this->db->insert('laboratorium', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    redirect('data_perkuliahan/laboratorium/index');
-                    return;
-                }
-
-                $this->db->select('*');
-                $query = $this->db->get('mst_fakultas');
-                $this->mViewData['list_fakultas'] = $query->result();
-                $this->mViewData['title'] = 'Tambah Data Laboratorium';
-                $this->render('data_perkuliahan/laboratorium/add', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'edit' && !empty($id)) { // EDIT
-                if ($_POST) {
-                    $kd_ruang_old = $_POST['kd_ruang_old'];
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
-
-                    $this->db->trans_begin();
-                    $this->db->where('kd_ruang', $kd_ruang_old);
-                    $this->db->update('laboratorium', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    // redirect('data_perkuliahan/mahasiswa/index?state_fakultas=' . $kd_fakultas);
-                    redirect('data_perkuliahan/laboratorium/index');
-                    return;
-                }
-
-                $this->db->select('a.kd_ruang, c.kd_prodi, d.kd_fakultas, a.nik_dosen_pj, a.nama_lab');
-                $this->db->from('laboratorium as a');
-                $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
-                $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-                $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-                $this->db->where('kd_ruang', $id);
-                $query = $this->db->get();
-                $this->mViewData['data'] = $query->row();
-
-                $this->db->select('f.*');
-                $query2 = $this->db->get('mst_fakultas as f');
-                $this->mViewData['list_fakultas'] = $query2->result();
-
-                $this->db->select('*');
-                $this->db->where('kd_fakultas', $this->mViewData['data']->kd_fakultas);
-                $query3 = $this->db->get('mst_program_studi');
-                $this->mViewData['list_prodi'] = $query3->result();
-
-                $this->db->select('a.nik, a.nama_dosen');
-                $this->db->from('mst_dosen as a');
-                $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi');
-                $this->db->where('b.kd_fakultas', $this->mViewData['data']->kd_fakultas);
-                $query4 = $this->db->get();
-                $this->mViewData['list_dosen'] = $query4->result();
-
-                // exit(var_dump($query4->result()));
-
-                $this->mViewData['title'] = 'Edit Data Laboratorium';
-                $this->render('data_perkuliahan/laboratorium/edit', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'delete' && !empty($id)) {
-                $this->db->trans_begin();
-                $this->db->delete('laboratorium', array('kd_ruang' => $id));
-
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $_SESSION['state_status_delete'] = true;
-                } else {
-                    $this->db->trans_rollback();
-                    $_SESSION['state_status_delete'] = false;
-                }
-                redirect($this->agent->referrer());
-                return;
-            }
-        }
-
-        $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nik_dosen_pj, b.nama_dosen, a.nama_lab');
-        $this->db->from('laboratorium as a');
-        $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
-        $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-        $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-        $query = $this->db->get();
-        $this->mViewData['data'] = $query->result();
-
-        $cssFile = [
-            'assets/dist/dataTables/datatables.min.css',
-        ];
-        $this->add_stylesheet($cssFile, true);
-
-        $jsFile = [
-            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
-            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-        ];
-        $this->add_script($jsFile, TRUE, 'foot');
-
-        $this->mPageTitle = 'Data Laboratorium';
-        $this->render('data_perkuliahan/laboratorium/index', 'with_breadcrumb_logged');
-    }
-
-    public function mata_kuliah()
-    {
-        $state_fakultas = isset($_GET['state_fakultas']) ? $_GET['state_fakultas'] : null;
-        $state = isset($_GET['state']) ? $_GET['state'] : null;
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $this->mViewData['state_fakultas'] = $state_fakultas;
-
-        if ($state === 'add' || $state === 'edit' || $state === 'delete') {
-            $this->load->library('rsa');
-
-            // ADD
-            if ($state === 'add') {
-                if ($_POST) {
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
-
-                    $this->db->trans_begin();
-                    $this->db->insert('laboratorium', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    redirect('data_perkuliahan/laboratorium/index');
-                    return;
-                }
-
-                $this->db->select('*');
-                $query = $this->db->get('mst_fakultas');
-                $this->mViewData['list_fakultas'] = $query->result();
-                $this->mViewData['title'] = 'Tambah Data Laboratorium';
-                $this->render('data_perkuliahan/laboratorium/add', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'edit' && !empty($id)) { // EDIT
-                if ($_POST) {
-                    $kd_ruang_old = $_POST['kd_ruang_old'];
-                    $kd_ruang = $_POST['kd_ruang'];
-                    $kd_prodi = $_POST['kd_prodi'];
-                    $nik_dosen_pj = $_POST['nik_dosen_pj'];
-                    $nama_lab = $_POST['nama_lab'];
-
-                    $this->db->trans_begin();
-                    $this->db->where('kd_ruang', $kd_ruang_old);
-                    $this->db->update('laboratorium', array(
-                        'kd_ruang' => $kd_ruang,
-                        'kd_prodi' => $kd_prodi,
-                        'nik_dosen_pj' => $nik_dosen_pj,
-                        'nama_lab' => $nama_lab
-                    ));
-
-                    if ($this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $_SESSION['state_status'] = true;
-                    } else {
-                        $this->db->trans_rollback();
-                        $_SESSION['state_status'] = false;
-                    }
-
-                    // redirect('data_perkuliahan/mahasiswa/index?state_fakultas=' . $kd_fakultas);
-                    redirect('data_perkuliahan/laboratorium/index');
-                    return;
-                }
-
-                $this->db->select('a.kd_ruang, c.kd_prodi, d.kd_fakultas, a.nik_dosen_pj, a.nama_lab');
-                $this->db->from('laboratorium as a');
-                $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
-                $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-                $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-                $this->db->where('kd_ruang', $id);
-                $query = $this->db->get();
-                $this->mViewData['data'] = $query->row();
-
-                $this->db->select('f.*');
-                $query2 = $this->db->get('mst_fakultas as f');
-                $this->mViewData['list_fakultas'] = $query2->result();
-
-                $this->db->select('*');
-                $this->db->where('kd_fakultas', $this->mViewData['data']->kd_fakultas);
-                $query3 = $this->db->get('mst_program_studi');
-                $this->mViewData['list_prodi'] = $query3->result();
-
-                $this->db->select('a.nik, a.nama_dosen');
-                $this->db->from('mst_dosen as a');
-                $this->db->join('mst_program_studi as b', 'a.kd_prodi = b.kd_prodi');
-                $this->db->where('b.kd_fakultas', $this->mViewData['data']->kd_fakultas);
-                $query4 = $this->db->get();
-                $this->mViewData['list_dosen'] = $query4->result();
-
-                // exit(var_dump($query4->result()));
-
-                $this->mViewData['title'] = 'Edit Data Laboratorium';
-                $this->render('data_perkuliahan/laboratorium/edit', 'with_breadcrumb_logged');
-                return;
-            } else if ($state === 'delete' && !empty($id)) {
-                $this->db->trans_begin();
-                $this->db->delete('laboratorium', array('kd_ruang' => $id));
-
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $_SESSION['state_status_delete'] = true;
-                } else {
-                    $this->db->trans_rollback();
-                    $_SESSION['state_status_delete'] = false;
-                }
-                redirect($this->agent->referrer());
-                return;
-            }
-        }
-
-        // $this->db->select('a.kd_ruang, c.nama_prodi, d.nama_fakultas, a.nik_dosen_pj, b.nama_dosen, a.nama_lab');
-        // $this->db->from('laboratorium as a');
-        // $this->db->join('mst_dosen as b', 'a.nik_dosen_pj = b.nik', 'left');
-        // $this->db->join('mst_program_studi as c', 'a.kd_prodi = c.kd_prodi', 'left');
-        // $this->db->join('mst_fakultas as d', 'c.kd_fakultas = d.kd_fakultas', 'left');
-        $this->db->select('*');
-        $this->db->from('mata_kuliah');
-        $query = $this->db->get();
-        $this->mViewData['data'] = $query->result();
-
-        $cssFile = [
-            'assets/dist/dataTables/datatables.min.css',
-        ];
-        $this->add_stylesheet($cssFile, true);
-
-        $jsFile = [
-            'assets/dist/data-grid/datatables/media/js/jquery.dataTables.min.js',
-            'assets/dist/data-grid/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js',
-        ];
-        $this->add_script($jsFile, TRUE, 'foot');
-
-        $this->mPageTitle = 'Data Mata Kuliah';
-        $this->render('data_perkuliahan/mata_kuliah/index', 'with_breadcrumb_logged');
-    }
 }
